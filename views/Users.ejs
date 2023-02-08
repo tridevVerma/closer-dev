@@ -7,20 +7,37 @@
     <title><%=title%></title>
     <style>
         body{
+            font-family: sans-serif;
             padding:0px;
             margin:0px;
             box-sizing: border-box;
             width: 100%;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: skyblue;
-            color:white;
+            color:black;
         }
+
+        .logout-btn{
+            text-decoration: none;
+            text-transform: capitalize;
+            padding:10px 20px;
+            margin:4rem;
+            font-size: 1.2rem;
+            border: 2px solid black;
+            background-color: lightcoral;
+            color: black;
+        }
+        
     </style>
 </head>
 <body>
-    <h1>Users</h1>
+    <h1>Name : <%=user.name%></h1>
+    <h1>Email : <%=user.email%></h1>
+    <a href="/users/profile/<%=user._id%>" class="logout-btn">logout</a>
+    <!-- <a href="/users/profile/logout/?id=<%=user._id%>" class="logout-btn">logout</a> -->
 </body>
 </html>

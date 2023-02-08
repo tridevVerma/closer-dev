@@ -10,5 +10,7 @@ router.get('/signup', usersController.signup);
 router.get('/login', usersController.login);
 router.post('/create', usersController.create);
 router.post('/create-session', usersController.createSession);
+router.get('/profile/:id', usersController.logout); // params
+// router.get('/profile/logout', usersController.logout); // query
 
 module.exports = router;
