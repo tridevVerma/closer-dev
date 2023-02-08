@@ -44,21 +44,7 @@ module.exports.create = (req, res) => {
 
 // sign in and create session for the user
 module.exports.createSession = (req, res) => {
-    User.findOne({email : req.body.email}, (err, user) => {
-        if(err){
-            console.log("Error in finding user for signin");
-            return;
-        }
-        if(!user){
-            console.log("User doesn't exist");
-            return res.redirect('/users/signup');
-        }
-        else{
-            console.log("Yayyyyy!! user exists");
-            return res.redirect('/', {title: user.name});
-        }
-    })
-    
+    return res.redirect('/users/profile');
 }
 
 function deleteAllExistingUser(){
