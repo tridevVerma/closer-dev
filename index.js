@@ -4,6 +4,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 const port = 8000;
@@ -13,10 +14,11 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static('assets'));
 
-//set up ejs
+// set up ejs
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// Mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'closer',
     // Todo change the secret before deployment in production mode
@@ -25,7 +27,8 @@ app.use(session({
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
-    }
+    },
+    store: MongoStore.create({mongoUrl: "mongodb://localhost/todosdb_development"}),
 }));
 
 app.use(passport.initialize());
