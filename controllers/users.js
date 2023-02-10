@@ -53,6 +53,15 @@ module.exports.createSession = (req, res) => {
     return res.redirect('/users/profile');
 }
 
+// logout user
+module.exports.destroySession = (req, res) => {
+    console.log(req.params); // user Id = req.params.id
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
+}
+
 function deleteAllExistingUser(){
     User.deleteMany({}, (err, msg) => {
         if(err){

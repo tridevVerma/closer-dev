@@ -9,8 +9,7 @@ body{
     height: 100vh;
     background: rgb(250, 56, 88);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    
 }
 
 .container{

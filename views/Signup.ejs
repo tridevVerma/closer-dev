@@ -1,26 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=title%></title>
-    <link rel="stylesheet" href="/css/signup-style.css">
-</head>
-<body>
-    <div class="container">
-        <form action="/users/create" method="POST" class="signup-form">
-            <input type="text" name="name" id="name" placeholder="Enter Name" required>
-            <input type="email" name="email" id="email" placeholder="Enter Email" required>
-            <input type="password" name="password" id="password" placeholder="Enter Password" required>
-            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
-            <input type="submit" id="submit-btn" value="Signup">
-        </form>
-        <div class="imgae">
-            <figure>
-                <img src="/images/signup.jpg" alt="signup-img">
-            </figure>
-        </div>
+<link rel="stylesheet" href="/css/signup-style.css">
+
+<div class="container">
+    <form action="/users/create" method="POST" class="signup-form">
+        <input type="text" name="name" id="name" placeholder="Enter Name" required>
+        <input type="email" name="email" id="email" placeholder="Enter Email" required>
+        <input type="password" name="password" id="password" placeholder="Enter Password" required>
+        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+        <input type="submit" id="submit-btn" value="Signup">
+    </form>
+    <div class="imgae">
+        <figure>
+            <img src="/images/signup.jpg" alt="signup-img">
+        </figure>
     </div>
-</body>
-</html>
+</div>
