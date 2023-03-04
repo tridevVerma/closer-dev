@@ -4,13 +4,16 @@ const router = express.Router();
 
 const usersController = require('../controllers/users')
 const ordersController = require('../controllers/orders');
+const postsController = require('../controllers/posts');
 
 router.get('/profile', passport.checkAuthentication, usersController.profile);
 router.get('/orders', ordersController.orders);
 router.get('/signup', usersController.signup);
 router.get('/login', usersController.login);
 router.post('/create', usersController.create);
-router.get('/profile/:id', usersController.destroySession)
+router.get('/profile/:id', usersController.destroySession);
+
+router.post('/posts/create', passport.checkAuthentication, postsController.createPost);
 
 // use passport as a middleware to authenticate
 router.post('/create-session', passport.authenticate(

@@ -2,14 +2,48 @@
     body{
         background-color: blueviolet;
     }
+    input{
+        width: 100%;
+        padding: 6px;
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    input[type="submit"]{
+        background-color: #222;
+        color:white;
+        border:none;
+        padding:10px;
+    }
+
+    input[type="submit"]:hover{
+        cursor: pointer;
+        background-color: #000;
+    }
 </style>
 
 <h1>Home Page</h1>
 
 <section id="feed-posts">
-    <h4>Posts</h4>
-    <form id="new-post-form" method="POST" action="">
-        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    <h2>Posts</h2>
+
+    <% if (locals.user) { %>
+    <form id="new-post-form" method="POST" action="/users/posts/create">
+        <input type="text" name="post-title" id="post-title">
+        <textarea name="post-content" id="post-content" cols="80" rows="20" placeholder="Type Here ...."></textarea>
         <input type="submit" value="Post">
     </form>
+    <% } %>
+    <div class="show-posts">
+        <h2>Show Posts Here</h2>
+        <ul>
+            <% for (let post of posts ) { %>
+                <li>
+                    <h3><%=post.title%></h3>
+                    <p><%=post.content%></p>
+                </li>
+            <% } %>
+        </ul>
+
+    </div>
 </section>
