@@ -1,3 +1,17 @@
-<h1>Name : <%=user.name%></h1>
-<h1>Email : <%=user.email%></h1>
+<% if(locals.user && locals.user.id == profile_user.id) { %>
+
+    <!-- if user matches show the form -->
+    <h2>This is <%= profile_user.name %>'s Profile</h2>
+
+    <form method="POST" action="/users/profile-update/<%= profile_user.id %>">
+        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
+        <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+        <input type="submit" value="Update">
+    </form>
+<% } else { %>
+
+    <!-- if user doesn't match show only profile info -->
+    <h1>Name : <%=profile_user.name%></h1>
+    <h1>Email : <%=profile_user.email%></h1>
+<% } %>
     

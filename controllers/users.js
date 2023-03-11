@@ -1,15 +1,32 @@
 const User = require('../models/User');
 
 module.exports.profile = function(req, res) {
-    res.render('Users', {
-        title : "User's Profile"
-    });
+    User.findById(req.params.id, (err, user) => {
+        if(err){ console.log("Can't find user in DB to view profile"); return; }
+        res.render('Users', {
+            title : "User's Profile",
+            profile_user : user
+        });
+    })
+    
+}
+
+module.exports.updateProfile = (req, res) => {
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
+            if(err){ console.log("can't update users profile"); return; }
+            return res.redirect('back');
+        })
+    }
+    else{
+        return res.status(401).send('Unauthorized');
+    }
 }
 
 // render signup page
 module.exports.signup = function(req, res) {
     if(req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('Signup', {title : "Signup"});
 }
@@ -17,7 +34,7 @@ module.exports.signup = function(req, res) {
 // render login page
 module.exports.login = function(req, res) {
     if(req.isAuthenticated()){
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('Login', {title : "Login"});
 }
@@ -50,7 +67,7 @@ module.exports.create = (req, res) => {
 
 // sign in and create session for the user
 module.exports.createSession = (req, res) => {
-    return res.redirect('/users/profile');
+    return res.redirect('/');
 }
 
 // logout user
