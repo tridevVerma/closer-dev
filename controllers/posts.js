@@ -9,12 +9,20 @@ module.exports.createPost = async (req, res) => {
     
     try {
         const post = await Post.create(newPost); 
-        console.log("*************Post Created**************");
-        console.log(post)
+        if(req.xhr){
+            return res.status(201).json({
+                data: {
+                    post: post,
+                    username: req.user.name
+                },
+                message: "Post created!!"
+            })
+        }
+        req.flash('success', "Post published!!");
         return res.redirect('back');    
-    } catch (error) {
-        console.log("Error in creating Post", error);
-        return;
+    } catch (err) {
+        req.flash('error', err);
+        return res.redirect('back');
     }
 };
 
@@ -29,14 +37,25 @@ module.exports.destroyPost = async (req, res) => {
         if(post.user == req.user.id){
             post.remove();
             await Comment.deleteMany({post: req.params.id});
+
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        post_id: req.params.id
+                    },
+                    message: "Post deleted"
+                })
+            }
+            req.flash('success', "Post and associated comments deleted!!");
             return res.redirect('back');
         }
         else{
+            req.flash('error', "You cannot delete this post!!");
             return res.redirect('back');
         }
 
     } catch (err) {
-        console.log("can't destroy posts!!");
+        req.flash('error', err);
     }
 
     // callback hell

@@ -18,6 +18,16 @@ module.exports.createComment = (req, res) => {
                 if(err){ console.log("Error in posting comment", err); return; }
                 post.comments.push(comment);
                 post.save();
+                if(req.xhr){
+                    return res.status(201).json({
+                        data: {
+                            comment,
+                            username: req.user.name,
+                        },
+                        message: "Comment Added"
+                    })
+                }
+                req.flash('success', "Comment created!!");
                 res.redirect('/');
             })
         }  
@@ -33,6 +43,16 @@ module.exports.destroyComment = (req, res) => {
 
             Post.findByIdAndUpdate(postId, { $pull : {comments : req.params.id}}, (err, post) => {
                 if(err) { console.log("Can't Delete comment reference in post"); return; }
+                if(req.xhr){
+                    return res.status(200).json({
+                        data: {
+                            comment_id: req.params.id
+                        },
+                        message: "Comment deleted!!"
+                    })
+                }
+                
+                req.flash('success', "Comment removed!!");
                 return res.redirect('back');
             })
         }

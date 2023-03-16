@@ -6,6 +6,8 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo');
 var expressLayouts = require('express-ejs-layouts');
+const flash = require('connect-flash');
+const {customFlash} = require('./config/customFlashMiddleware.js');
 
 const app = express();
 const port = 8000;
@@ -42,6 +44,9 @@ app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
 
+// configure flash messages (already configured cookie-parser and express-session above)
+app.use(flash());
+app.use(customFlash)
 // set up routes
 app.use('/', require('./routes/index'));
 
