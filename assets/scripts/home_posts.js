@@ -1,30 +1,35 @@
 {
 
     // method to submit the form data for new post using AJAX
-    function createPost(e, newPostForm){
-        
-        e.preventDefault();
+    function createPost(){
+        const newPostForm = $('#new-post-form');
 
-        $.ajax({
-            type:"POST",
-            url:"/users/posts/create",
-            data: $(newPostForm).serialize(),
-            success: function(data){
-                let newPost = newPostDom(data.data.post, data.data.username);
-                $('.show-posts>ul').prepend(newPost);
-                deletePost($(' .delete-post-btn', newPost));
-                notifyMsg("Post published!!", "success");
-            },
-            error: function(err){
-                notifyMsg(err.responseText, "error");
-            }
+        $(newPostForm).submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                type:"POST",
+                url:"/users/posts/create",
+                data: $(newPostForm).serialize(),
+                success: function(data){
+                    let newPost = newPostDom(data.data.post, data.data.username);
+                    $('.show-posts>ul').prepend(newPost);
+                    deletePost($(' .delete-post-btn', newPost));
+                    new PostComments(data.data.post._id);
+                    $(newPostForm)[0].reset();
+                    notifyMsg("Post published!!", "success");
+                },
+                error: function(err){
+                    notifyMsg(err.responseText, "error");
+                }
+            })
         })
+        
     };
 
     // method to create post in DOM
 
     let newPostDom = function(post, username){
-        console.log(post)
         return $(`<li id="post-${post._id}">
         <div class="title-close">
             <h3>${post.title} - <span class="post-user-name">${username}</span></h3>
@@ -34,8 +39,8 @@
         <p>${post.content}</p>
         <div class="comments-section">
             
-            <form method="POST" action="/users/comments/create" class="new-comment-form">
-                <input type="text" name="comment-content" placeholder="Comments here ....">
+            <form id="post-${post._id}-comment-form" method="POST" action="/users/comments/create" class="new-comment-form">
+                <input type="text" name="comment-content" placeholder="Comment here ....">
                 <input type="hidden" name="post" value="${post._id}">
                 <input type="submit" value="Submit">
             </form>
@@ -49,14 +54,6 @@
         
     </li>`)
 
-    }
-
-    // method to add ajax deletion to posts which are already present
-
-    let addAjaxDeletion = function(postDeleteLinks){
-        for(let link of postDeleteLinks){
-            deletePost(link);
-        }
     }
 
     // method to delete a post from DOM
@@ -90,9 +87,15 @@
         }).show();
     }
 
-    $(document).ready(function(){
-        let newPostForm = $('#new-post-form');
-        newPostForm.submit(e => createPost(e, newPostForm));
-        addAjaxDeletion($('.delete-post-btn'));
-    })
+    let addAjax = function(){
+        $('.show-posts>ul>li').each(function(index, post){
+            deletePost($(post).find('.delete-post-btn'));
+            let postId = $(post).prop('id').split('-')[1];
+            new PostComments(postId);
+        })
+    }
+
+    createPost();
+    addAjax();
+    
 }

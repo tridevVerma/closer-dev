@@ -31,11 +31,10 @@ module.exports.destroyPost = async (req, res) => {
     // async await 
     
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findByIdAndDelete(req.params.id);
 
         // .id means converting _id to string format
         if(post.user == req.user.id){
-            post.remove();
             await Comment.deleteMany({post: req.params.id});
 
             if(req.xhr){

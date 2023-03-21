@@ -1,0 +1,38 @@
+main {
+  width: 100%;
+  height: 91vh;
+  background: #fa3858;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  main .container {
+    width: 60%;
+    height: 60vh;
+    background: linear-gradient(109.6deg, #242d39 11.2%, #10253c 51.2%, black 98.6%);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex; }
+    main .container > form {
+      width: 60%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center; }
+      main .container > form input {
+        border: none;
+        outline: none;
+        width: 300px;
+        font-size: 1.2rem;
+        padding: 8px 16px;
+        border-radius: 30px; }
+      main .container > form > #submit-btn {
+        cursor: pointer; }
+        main .container > form > #submit-btn:hover {
+          background-color: #fa3858;
+          color: #fff; }
+    main .container .images {
+      width: 40%;
+      height: 100%; }
+      main .container .images figure, main .container .images figure img {
+        width: 100%;
+        height: 100%; }

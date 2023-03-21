@@ -1,44 +1,53 @@
-{
+class PostComments{
+    constructor(postId){
+        this.postId = postId;
+        this.postContainer = $(`#post-${postId}`);
+        this.newCommentForm = $(`#post-${postId}-comment-form`);
 
+        this.createComment(postId);
 
-    let createComment = function(e, form){
-        e.preventDefault();
+        // method to add ajax deletion to posts which are already present
 
-        $.ajax({
-            type: "POST",
-            url: "/users/comments/create",
-            data: $(form).serialize(),
-            success: function(data){
-                let newComment = newCommentDom(data.data.comment, data.data.username);
-                let commentsList = $(`#comment-post-id-${data.data.comment.post}`);
-                $(commentsList).prepend(newComment);
-                deleteComment($(' .delete-comment-btn', newComment));
-                notifyMsg("Comment created!!", "success");
-            },
-            error: function(err){
-                notifyMsg(err.responseText, "error");
-            }
-        })
+        let classThis = this;
+        $(this.postContainer).find('.delete-comment-btn').each(function(index, btnLink){
+            classThis.deleteComment(btnLink);
+        } )
     }
 
-    let newCommentDom = function(comment, username){
+    createComment = function(postId){
+        let classThis = this;
+        $(this.newCommentForm).submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "/users/comments/create",
+                data: $(this.newCommentForm).serialize(),
+                success: function(data){
+                    let newComment = classThis.newCommentDom(data.data.comment, data.data.username);
+                    let commentsList = $(`#comment-post-id-${postId}`);
+                    $(commentsList).prepend(newComment);
+                    classThis.deleteComment($(newComment).find('.delete-comment-btn'));
+                    $(classThis.newCommentForm)[0].reset();
+                    classThis.notifyMsg("Comment created!!", "success");
+                },
+                error: function(error){
+                    classThis.notifyMsg(error.responseText, "error");
+                }
+            })
+        })
+        
+    }
+
+    newCommentDom = function(comment, username){
         return $(`<li id="comment-${comment._id}">
-        <strong>${username} : </strong>
-        &nbsp;
-        ${comment.content}
-        <a href="/users/comments/destroy/${comment._id}">x</a>
+        <p><strong>${username} : </strong>&nbsp;${comment.content}</p>
+        <a href="/users/comments/destroy/${comment._id}" class="delete-comment-btn">x</a>
     </li>`)
     }
-
-    // method to add ajax deletion to posts which are already present
-
-    let addAjaxDeletion = function(commentDeleteLinks){
-        for(let link of commentDeleteLinks){
-            deleteComment(link);
-        }
-    }
-
-    let deleteComment = function(deleteLink){
+    
+    deleteComment = function(deleteLink){
+        let classThis = this;
         $(deleteLink).click(function(e){
             e.preventDefault();
             $.ajax({
@@ -46,10 +55,10 @@
                 url:$(deleteLink).prop('href'),
                 success: function(data){
                     $(`#comment-${data.data.comment_id}`).remove();
-                    notifyMsg("Comment removed!!", "success");
+                    classThis.notifyMsg("Comment removed!!", "success");
                 },
                 error: function(err){
-                    notifyMsg(err.responseText, "error");
+                    classThis.notifyMsg(err.responseText, "error");
                 }
             })
         })
@@ -57,7 +66,7 @@
 
     // method to call noty
 
-    let notifyMsg = function(textMsg, typeMsg){
+    notifyMsg = function(textMsg, typeMsg){
         new Noty({
             theme : 'relax' , 
             text: textMsg,
@@ -67,13 +76,5 @@
             
         }).show();
     }
-
-    $(document).ready(function(){
-
-        addAjaxDeletion($('.delete-comment-btn'));
-        $('.new-comment-form').each(function(index, form){
-            $(form).submit((e) => createComment(e, form))  
-        })
-    })
-
+    
 }

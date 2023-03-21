@@ -1,0 +1,32 @@
+nav{
+    position: sticky;
+    z-index: 10;
+    top:0%;
+    left:0%;
+    width: 100%;
+}
+
+nav ul {
+    list-style-type: none;
+    background-color: #0f1021;
+    color:#fff;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    li a{
+        text-decoration: none;
+        font-weight: bold;
+        color:inherit;
+        text-transform: capitalize;
+    }
+
+    .logout-btn{
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        background-color: #fff;
+        color: #000;
+    }
+}

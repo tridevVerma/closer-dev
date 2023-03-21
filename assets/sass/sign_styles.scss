@@ -1,0 +1,57 @@
+main{
+    width: 100%;
+    height: 91vh;
+    background: rgb(250, 56, 88);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container{
+        width: 60%;
+        height: 60vh;
+        background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        display: flex;
+
+        & > form{
+            width: 60%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+
+            input{
+                border: none;
+                outline: none;
+                width: 300px;
+                font-size: 1.2rem;
+                padding: 8px 16px;
+                border-radius: 30px;
+            }
+
+            & > #submit-btn{
+                cursor: pointer;
+                &:hover{
+                    background-color: rgb(250, 56, 88);
+                    color:#fff;
+                }
+            }
+            
+            
+            
+        }
+
+        .images{
+            width: 40%;
+            height: 100%; 
+            
+            figure, figure img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        
+    }
+}
+

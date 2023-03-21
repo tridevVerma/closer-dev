@@ -1,0 +1,48 @@
+#users-profile{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgb(250, 56, 88);
+
+    & > h1{
+        font-size: 4rem;
+        margin: 2rem auto;
+    }
+
+    & > h2{
+        font-size: 3rem;
+        margin: 2rem auto;
+    }
+
+    & > form{
+        width: 60%;
+        height: 60%;
+        background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        input{
+            border: 2px solid #000;
+            width: 80%;
+            font-size: 1.2rem;
+            padding: 8px 16px;
+            border-radius: 30px;
+        }
+
+        & > #update-profile-btn{
+            cursor: pointer;
+
+            &:hover{
+                background-color: rgb(250, 56, 88);
+                color:#fff;
+                border: 2px solid rgb(250, 56, 88);
+            }
+        }  
+    }
+}

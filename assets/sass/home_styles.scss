@@ -1,0 +1,264 @@
+section > h1{
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+#users-posts-comments{
+    width: 70%;
+
+    #feed-posts{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        #new-post-form{
+            width: 80%;
+            margin-top: 2rem;
+            margin-bottom: 2rem;;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            & > input{
+                font-size: 1.2rem; 
+                font-style: bold;
+                width: 100%;
+                padding: 6px;
+                margin-bottom: 1.2rem;
+                outline: none;
+            }
+
+            & > input[type="submit"]{
+                background-color: #ff487e;
+                color:white;
+                border:none;
+                padding:10px;
+            }
+        
+            input[type="submit"]:hover{
+                cursor: pointer;
+                background-color: #f40968;
+                
+            }
+
+            & > textarea{
+                width: 100%;
+                outline: none;
+                padding:12px;
+                line-height: 1.5; 
+                font-size: 1rem;
+            }
+        }
+
+        .show-posts{
+            width: 80%;
+            h2{
+                text-align: center;
+            }
+            & > ul{
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 1.5rem;
+                & > li{
+                    position: relative;
+                    height: 300px;
+                    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+                    border-radius: 20px;
+                    padding: 1.2rem;
+                    display: flex;
+                    flex-direction: column;
+                    color: #fff;
+
+                    .title-close{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        h3{
+                            color: #ff487e;
+                            margin-bottom: 1.5rem;
+                            span{
+                                color: #ffedff;
+                            }
+                        }
+
+                        a{
+                            position: absolute;
+                            right: -20px;
+                            top: -20px;
+                            cursor: pointer;
+                            width: 50px;
+                            height: 50px;
+                            background-color: #ff487e;
+                            color: #fff;
+                            padding:1rem;
+                            border-radius: 50%;
+                            text-align: center;
+                            font-size: 1.2rem;
+                            font-weight: bold;
+
+                            &:hover{
+                                
+                                background-color: #f40968;
+                            }
+                        }
+                    }
+
+                    & > p{
+                        margin-bottom: 1rem;
+                        line-height: 25px;
+                    }
+
+                    .comments-section{
+                        border-top: 2px solid #ff487e;
+                        padding-top: 1rem;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+
+                        .new-comment-form{
+                            width: 100%;
+                            display: grid;
+                            grid-template-columns: 1fr 80px;
+                            justify-content: center;
+                            margin: 1rem auto;
+                            
+                            & > input[type="text"]{
+                                border-top-left-radius: 20px;
+                                border-bottom-left-radius: 20px;
+                                font-size: 0.8rem;
+                                padding:6px 12px;
+                                outline: none;
+                                border: none;
+                                width: 100%;
+                                padding: 6px 16px;
+                                font-size: 0.9rem;
+                            }
+
+                            & > input[type="submit"]{
+                                background-color: #ff487e;
+                                color: #fff;
+                                border: none;
+                                padding: 10px;
+                                border-top-right-radius: 20px;
+                                border-bottom-right-radius: 20px;
+                                font-size: 0.9rem;
+                                &:hover{
+                                    cursor: pointer;
+                                    background-color: #f40968;
+                                }
+                            }
+                        }
+
+                        & > a{
+                            color: #fff;
+                            margin-top: 1rem;
+                            margin-bottom: 1rem;
+
+                            &:hover{
+                                color: #ff487e
+                            }
+                        }
+
+                        .show-comments{
+                            flex-grow: 1;
+
+                            & > ul{
+                                max-height: 90px;
+                                overflow-y: auto;
+
+                                &::-webkit-scrollbar-track
+                                {
+                                    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+                                    background-color: transparent;
+                                    border-radius: 10px;
+                                }
+
+                                &::-webkit-scrollbar
+                                {
+                                    width: 8px;
+                                    background-color:transparent;
+                                }
+
+                                &::-webkit-scrollbar-thumb
+                                {
+                                    border-radius: 10px;
+                                    background-color: #ff487e;
+                                }
+
+                                & > li{
+                                    margin: 0.8rem auto;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+
+                                    & > p{
+                                        color: #fff;
+                                        & > strong{
+                                            color: #ff487e;
+                                        }
+                                    }
+
+                                    & > a{
+                                        color: #fff;
+                                        margin-right: 1rem;
+                                        font-size: 1rem;
+                                        
+                                        &:hover{
+                                            color: #ff487e;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+
+
+                }
+            }
+        }
+
+    }
+    
+}
+
+#users-freinds{
+    flex-grow: 1;
+    background: #0f1021;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    & > h1{
+        color: #fff
+    }
+
+    & > .smiley{
+        font-size: 6rem;
+    }
+
+    & > ul{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        & > li{
+            width: 100%;
+            text-align: center;
+            background-color: #ff487e;
+            margin: 1rem auto;
+            padding: 10px;
+            & > a{
+                font-size: 1.5rem;
+                color: #fff;
+            }
+        }
+    }
+}

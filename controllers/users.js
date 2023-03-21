@@ -1,26 +1,33 @@
 const User = require('../models/User');
 
-module.exports.profile = function(req, res) {
-    User.findById(req.params.id, (err, user) => {
-        if(err){ console.log("Can't find user in DB to view profile"); return; }
+// view profile to logged user
+module.exports.profile = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
         res.render('Users', {
             title : "User's Profile",
             profile_user : user
         });
-    })
-    
+    } catch (err) {
+        console.log("Can't find user in DB to view profile", err); return;
+    }
 }
 
-module.exports.updateProfile = (req, res) => {
-    if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id, req.body, (err, user) => {
-            if(err){ console.log("can't update users profile"); return; }
+// update profile of logged user
+module.exports.updateProfile = async (req, res) => {
+    try {
+        if(req.user.id == req.params.id){
+            await User.findByIdAndUpdate(req.params.id, req.body);
+            req.flash('success', "Profile Updated!!")
             return res.redirect('back');
-        })
+        }
+        else{
+            return res.status(401).redirect('back');
+        }
+    } catch (err) {
+        console.log("can't update users profile", err); return; 
     }
-    else{
-        return res.status(401).send('Unauthorized');
-    }
+    
 }
 
 // render signup page
@@ -67,7 +74,7 @@ module.exports.create = async (req, res) => {
 
 // sign in and create session for the user
 module.exports.createSession = (req, res) => {
-    req.flash('success', "Logged in successfully!!");
+    req.flash('success', "Logged in!!");
     return res.redirect('/');
 }
 
@@ -81,22 +88,23 @@ module.exports.destroySession = (req, res) => {
     });
 }
 
-function deleteAllExistingUser(){
-    User.deleteMany({}, (err, msg) => {
-        if(err){
-            console.log("Error in Deleting all Existing Users");
-            return;
-        }
-        console.log(msg);
-    })
+async function deleteAllExistingUser(){
+    try {
+        await User.deleteMany({});
+        return;
+    } catch (err) {
+        console.log(err);
+        return;
+    }
 }
 
-function findAllUsers(){
-    User.find({}, (err, users) => {
-        if(err){
-            console.log("Error in getting all users data");
-            return;
-        }
-        console.log("users : ", users);
-    })
+async function findAllUsers(){
+    try {
+        const users = await User.find({});
+        console.log("users : ", users);    
+    } catch (err) {
+        console.log("Error in getting all users data", err);
+        return;
+    }
+    
 }

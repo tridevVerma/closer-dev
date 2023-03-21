@@ -50,6 +50,7 @@ module.exports.home = async function(req, res){
         })
     } catch (error) {
         console.log("ERROR :", error);
+        return;
     }
     
 

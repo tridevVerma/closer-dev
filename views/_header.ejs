@@ -1,10 +1,14 @@
-<ul>
-    <% if(locals.user) {%>
-        <li>Name : <%=user.name%></li>
-        <li>Email : <%=user.email%></li>
-        <li><a href="/users/profile/<%=user._id%>" class="logout-btn">logout</a></li>
-    <% } else { %>
-        <li><a href="/users/signup">Sign-up</a></li>
-        <li><a href="/users/login">Log-in</a></li>
-    <% } %>
-</ul>
+<link rel="stylesheet" href="/css/header_styles.css">
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <% if(locals.user) {%>
+            <li>Name : <%=user.name%></li>
+            <li>Email : <%=user.email%></li>
+            <li><a href="/users/profile/<%=user._id%>" class="logout-btn">logout</a></li>
+        <% } else { %>
+            <li><a href="/users/signup">Sign-up</a></li>
+            <li><a href="/users/login">Log-in</a></li>
+        <% } %>
+    </ul>
+</nav>
