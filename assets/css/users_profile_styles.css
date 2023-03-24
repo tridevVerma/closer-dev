@@ -8,9 +8,20 @@
   #users-profile > h1 {
     font-size: 4rem;
     margin: 2rem auto; }
-  #users-profile > h2 {
-    font-size: 3rem;
+  #users-profile > .profile-heading {
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     margin: 2rem auto; }
+    #users-profile > .profile-heading > h2 {
+      font-size: 2rem;
+      margin: 2rem auto; }
+    #users-profile > .profile-heading > .profile-picture {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover; }
   #users-profile > form {
     width: 60%;
     height: 60%;

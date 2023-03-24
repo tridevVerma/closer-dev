@@ -1,5 +1,6 @@
+const path = require('path');
+const fs = require('fs');
 const User = require('../models/User');
-
 // view profile to logged user
 module.exports.profile = async (req, res) => {
     try {
@@ -15,19 +16,58 @@ module.exports.profile = async (req, res) => {
 
 // update profile of logged user
 module.exports.updateProfile = async (req, res) => {
-    try {
-        if(req.user.id == req.params.id){
-            await User.findByIdAndUpdate(req.params.id, req.body);
-            req.flash('success', "Profile Updated!!")
-            return res.redirect('back');
+    // try {
+    //     if(req.user.id == req.params.id){
+    //         await User.findByIdAndUpdate(req.params.id, req.body);
+    //         req.flash('success', "Profile Updated!!")
+    //         return res.redirect('back');
+    //     }
+    //     else{
+    //         return res.status(401).redirect('back');
+    //     }
+    // } catch (err) {
+    //     console.log("can't update users profile", err); return; 
+    // }
+
+    /** With Multer **/
+
+    if(req.user.id == req.params.id){
+        try {
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req, res, function(err){
+                if(err){
+                    console.log("****Multer Error****", err);
+                    return;
+                }
+                user.email = req.body.email;
+                user.name = req.body.name;
+
+                if(req.file){
+
+                    if(user.avatar){
+                        const avatarfilePath = path.join(__dirname, "..", user.avatar);
+                        if(fs.existsSync(avatarfilePath)){
+                            fs.unlinkSync(avatarfilePath);
+                        }
+                    }
+                    // this is the path of the uploaded file into the avatar field in the user
+                    user.avatar = path.join(User.avatarPath, req.file.filename) ;
+                }
+
+                user.save();
+                req.flash('success', "Profile Updated!!");
+                return res.redirect('back');
+            })
+
+        } catch (err) {
+            console.log("ERROR", err);
+            return;
         }
-        else{
-            return res.status(401).redirect('back');
-        }
-    } catch (err) {
-        console.log("can't update users profile", err); return; 
     }
-    
+    else{
+        req.flash('error', "Unauthorized Access");
+        return res.status(401).redirect('back');
+    }
 }
 
 // render signup page

@@ -11,9 +11,23 @@
         margin: 2rem auto;
     }
 
-    & > h2{
-        font-size: 3rem;
+    & > .profile-heading{
+        width: 20%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
         margin: 2rem auto;
+
+        & > h2{
+            font-size: 2rem;
+            margin: 2rem auto;
+        }
+        & > .profile-picture{
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     }
 
     & > form{

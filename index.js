@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo');
 var expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const {customFlash} = require('./config/customFlashMiddleware.js');
+const path = require('path');
 
 const app = express();
 const port = 8000;
@@ -16,6 +17,7 @@ const port = 8000;
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static('assets'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));   // make the upload path available to the browser
 
 // set up express-ejs-layouts
 app.use(expressLayouts);

@@ -1,13 +1,18 @@
 <link rel="stylesheet" href="/css/users_profile_styles.css">
+
 <section id="users-profile">
     <% if(locals.user && locals.user.id == profile_user.id) { %>
 
         <!-- if user matches show the form -->
-        <h2>Edit your Profile</h2>
-    
-        <form method="POST" action="/users/profile-update/<%= profile_user.id %>">
+        <div class="profile-heading">
+            <img src="<%= profile_user.avatar%>" alt="<%= profile_user.name%>" class="profile-picture">
+            <h2>Edit your Profile</h2>
+        </div>
+        
+        <form method="POST" action="/users/profile-update/<%= profile_user.id %>" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
             <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+            <input type="file" name="avatar" id="avatar-img" placeholder="Profile Picture">
             <input type="submit" value="Update" id="update-profile-btn">
         </form>
     <% } else { %>
