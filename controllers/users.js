@@ -91,7 +91,7 @@ module.exports.create = async (req, res) => {
     
     if(req.body.password !== req.body.confirm_password){
         req.flash('error', "password and confirm password didn't match");
-        res.redirect('back');
+        return res.redirect('back');
     }
 
     try {

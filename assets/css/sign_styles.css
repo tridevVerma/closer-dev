@@ -11,25 +11,61 @@ main {
     background: linear-gradient(109.6deg, #242d39 11.2%, #10253c 51.2%, black 98.6%);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex; }
-    main .container > form {
+    main .container > .local-google-container {
       width: 60%;
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      align-items: center; }
-      main .container > form input {
+      align-items: center;
+      padding-left: 2rem;
+      padding-right: 2rem; }
+      main .container > .local-google-container > form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center; }
+        main .container > .local-google-container > form input {
+          border: none;
+          outline: none;
+          width: 300px;
+          font-size: 1.2rem;
+          padding: 8px 16px;
+          border-radius: 30px;
+          margin: 1rem auto; }
+        main .container > .local-google-container > form > #submit-btn {
+          cursor: pointer; }
+          main .container > .local-google-container > form > #submit-btn:hover {
+            background-color: #fa3858;
+            color: #fff; }
+      main .container > .local-google-container > hr {
+        width: 100%;
+        height: 2px;
         border: none;
-        outline: none;
+        background-color: #fa3858; }
+      main .container > .local-google-container > a {
+        text-decoration: none;
         width: 300px;
         font-size: 1.2rem;
         padding: 8px 16px;
-        border-radius: 30px; }
-      main .container > form > #submit-btn {
-        cursor: pointer; }
-        main .container > form > #submit-btn:hover {
-          background-color: #fa3858;
-          color: #fff; }
+        border-radius: 30px;
+        background-color: #fff;
+        text-align: center;
+        color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #11263C; }
+        main .container > .local-google-container > a:hover {
+          background-color: #11263C;
+          color: #fff;
+          border: 1px solid #fff; }
+        main .container > .local-google-container > a > img {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          margin-right: 1rem; }
     main .container .images {
       width: 40%;
       height: 100%; }

@@ -1,14 +1,30 @@
-<link rel="stylesheet" href="/css/sign_styles.css">
+<link rel="stylesheet" href="/css/sign_styles.css" />
 
 <div class="container">
+  <div class="local-google-container">
     <form action="/users/create-session" method="post" class="signup-form">
-        <input type="email" name="email" id="email" placeholder="Enter Email" required>
-        <input type="password" name="password" id="password" placeholder="Enter Password" required>
-        <input type="submit" id="submit-btn" value="Login">
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Enter Email"
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Enter Password"
+        required
+      />
+      <input type="submit" id="submit-btn" value="Login" />
     </form>
-    <div class="images">
-        <figure>
-            <img src="/images/login.jpg" alt="signup-img">
-        </figure>
-    </div>
+    <hr/>
+    <a href="/users/auth/google"><img src="/images/google-logo.png" alt=""> Sign In / Sign Up</a>
+  </div>
+  <div class="images">
+    <figure>
+      <img src="/images/login.jpg" alt="signup-img" />
+    </figure>
+  </div>
 </div>

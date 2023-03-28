@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy'); // passport -> local strategy
 const passportJwt = require('./config/passport-jwt-strategy');  // passport -> jwt strategy
+const passportGoogle = require('./config/passport-google-oauth2-strategy'); // passport -> google strategy
 const MongoStore = require('connect-mongo');
 var expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
@@ -39,7 +40,7 @@ app.use(session({
     cookie: {
         maxAge: (1000 * 60 * 100)
     },
-    store: MongoStore.create({mongoUrl: "mongodb://127.0.0.1:27017/todosdb_development"}),
+    store: MongoStore.create({mongoUrl: "mongodb://127.0.0.1:27017/closer_development"}),
 }));
 
 app.use(passport.initialize());
