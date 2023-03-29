@@ -38,7 +38,7 @@
                             <% } %>
                             <div class="show-comments">
                                 <ul id="comment-post-id-<%= post._id%>">
-                                    <% post.comments.reverse().forEach(function(comment) { %>
+                                    <% post.comments.forEach(function(comment) { %>
                                         <li id="comment-<%=comment._id%>">
                                             <p><strong><%= comment.user.name%> : </strong>&nbsp;<%= comment.content %></p>
                                             <% if(locals.user && locals.user.id == comment.user.id){ %> 

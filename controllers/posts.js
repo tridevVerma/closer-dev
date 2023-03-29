@@ -8,7 +8,7 @@ module.exports.createPost = async (req, res) => {
     const newPost = {title: req.body["post-title"], content: req.body["post-content"], user: req.user._id};
     
     try {
-        const post = await Post.create(newPost); 
+        let post = await Post.create(newPost); 
         if(req.xhr){
             return res.status(201).json({
                 data: {

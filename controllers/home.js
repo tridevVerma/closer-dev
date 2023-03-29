@@ -32,10 +32,11 @@ module.exports.home = async function(req, res){
 
     try {
         let posts = await Post.find({})
-        .sort('-createdAt')
+        .sort({'createdAt': -1})
         .populate('user', 'name email')
         .populate({
             path: 'comments',
+            options: { sort: { 'createdAt': -1}},
             populate: {
                 path: 'user',
                 select: { '_id': 1,'name':1, 'email':1},
