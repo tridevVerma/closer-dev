@@ -1,0 +1,17 @@
+<div>
+    <h2>Hi <%=user.name%>!!</h2>
+    <br>
+    <p>Set up new password</p>
+    <br>
+    <form action="<%=link%>" method="POST">
+        <label for="pwd">Password : </label>
+        <input type="password" name="pwd" id="pwd" placeholder="Type New Password Here.." required>
+        <br><br>
+        <label for="confirm-pwd">Confirm Password</label>
+        <input type="password" name="confirm-pwd" id="confirm-pwd", placeholder="Confirm Password.." required>
+        <br><br>
+        <input type="submit" value="Reset">
+    </form>
+    <br>
+    <p>Thanks!!</p>
+</div>

@@ -18,6 +18,12 @@
     <% } else { %>
     
         <!-- if user doesn't match show only profile info -->
+        <% if(profile_user.avatar) { %>
+            <div class="profile-pic-container">
+                <img src="<%= profile_user.avatar%>" alt="<%= profile_user.name%>" class="profile-picture-large">
+            </div>
+        <% } %>
+        
         <h1>Name : <%=profile_user.name%></h1>
         <h1>Email : <%=profile_user.email%></h1>
     <% } %>

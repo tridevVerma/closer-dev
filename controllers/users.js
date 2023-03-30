@@ -1,6 +1,10 @@
 const path = require('path');
 const fs = require('fs');
 const User = require('../models/User');
+const Token = require('../models/Token');
+const crypto = require('crypto');
+const resetMailer = require('../mailers/resetMailer');
+
 // view profile to logged user
 module.exports.profile = async (req, res) => {
     try {
@@ -126,6 +130,78 @@ module.exports.destroySession = (req, res) => {
         req.flash('success', "You have logged out!!");
         res.redirect('/');
     });
+}
+
+// render forget password page
+module.exports.view_Reset = function(req, res) {
+    if(req.isAuthenticated()){
+        return res.redirect('/');
+    }
+    return res.render('ResetPwd', {title : "ResetPassword"});
+}
+
+// reset password
+module.exports.createToken = async function(req, res){
+    if(req.isAuthenticated()){
+        return res.redirect('/');
+    }
+
+    try {
+        const user = await User.findOne({email: req.body.email})
+        if(user){
+            console.log(req.body.email);
+            let token = await Token.findOne({userID: user._id});
+            if(!token){
+                token = await Token.create({
+                    userID: user._id,
+                    token: crypto.randomBytes(20).toString('hex')
+                });
+            }
+            console.log('token', token);
+            const resetLink = `http://localhost:8000/users/reset-pwd/${user.id}/${token.token}`;
+            resetMailer.resetPWD({name: user.name, email: user.email}, resetLink);
+            return res.redirect('back');        
+        }
+        else{
+            req.flash('error', "No user found with given email!");
+            res.redirect('/users/signup');
+        }
+        
+    } catch (err) {
+        console.log("Error in finding user in reset-pwd", err);
+        return;
+    }
+    
+}
+
+module.exports.resetPwd = async (req, res) => {
+
+    if(req.body.pwd !== req.body['confirm-pwd']){
+        req.flash('error', "Password and Confirm Password didn't matched");
+        return res.redirect('/users/reset-pwd');
+    }
+    else{
+        const user = await User.findById(req.params.id);
+        if(!user){
+            req.flash('error', "Invalid link or expired");
+            return res.redirect('/');
+        }
+        const token = await Token.findOne({
+            userID: user.id,
+            token: req.params.token
+        });
+
+        if(!token){
+            req.flash('error', "Invalid link or expired");
+            return res.redirect('/');
+        }
+
+        user.password = req.body.pwd;
+        await user.save();
+        await Token.deleteOne({_id: token._id});
+        req.flash('success', "password reset sucessfully!!");
+        return res.redirect('/');
+    }
 }
 
 async function deleteAllExistingUser(){
