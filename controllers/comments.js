@@ -11,7 +11,7 @@ module.exports.createComment = async (req, res) => {
         user: req.user._id,
         post: commentData.post
     }
-
+    
     try {
         const post = await Post.findById(commentData.post);
 
