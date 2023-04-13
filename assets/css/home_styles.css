@@ -61,29 +61,33 @@ section > h1 {
           color: #fff; }
           #users-posts-comments #feed-posts .show-posts > ul > li .title-close {
             display: flex;
-            justify-content: space-between;
-            align-items: center; }
+            justify-content: space-between; }
             #users-posts-comments #feed-posts .show-posts > ul > li .title-close h3 {
               color: #ff487e;
-              margin-bottom: 1.5rem; }
+              margin-bottom: 1.5rem;
+              flex-grow: 1; }
               #users-posts-comments #feed-posts .show-posts > ul > li .title-close h3 span {
                 color: #ffedff; }
-            #users-posts-comments #feed-posts .show-posts > ul > li .title-close a {
-              position: absolute;
-              right: -20px;
-              top: -20px;
+            #users-posts-comments #feed-posts .show-posts > ul > li .title-close .like-post-btn {
+              height: fit-content;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: fit-content;
+              padding: 4px 8px;
+              font-size: 1rem;
+              color: #ff487e;
+              margin-right: 1rem;
+              border-radius: 3px;
+              border: 2px solid #ff487e; }
+              #users-posts-comments #feed-posts .show-posts > ul > li .title-close .like-post-btn:hover {
+                background-color: #ff487e;
+                color: #fff; }
+            #users-posts-comments #feed-posts .show-posts > ul > li .title-close .delete-post-btn {
               cursor: pointer;
-              width: 50px;
-              height: 50px;
-              background-color: #ff487e;
-              color: #fff !important;
-              padding: 1rem;
-              border-radius: 50%;
-              text-align: center;
-              font-size: 1.2rem;
+              color: #ff487e !important;
+              font-size: 1.4rem;
               font-weight: bold; }
-              #users-posts-comments #feed-posts .show-posts > ul > li .title-close a:hover {
-                background-color: #f40968; }
           #users-posts-comments #feed-posts .show-posts > ul > li > p {
             margin-bottom: 1rem;
             line-height: 25px; }
@@ -147,7 +151,8 @@ section > h1 {
                   justify-content: space-between;
                   align-items: center; }
                   #users-posts-comments #feed-posts .show-posts > ul > li .comments-section .show-comments > ul > li > p {
-                    color: #fff; }
+                    color: #fff;
+                    flex-grow: 1; }
                     #users-posts-comments #feed-posts .show-posts > ul > li .comments-section .show-comments > ul > li > p > strong {
                       color: #ff487e; }
                   #users-posts-comments #feed-posts .show-posts > ul > li .comments-section .show-comments > ul > li > a {

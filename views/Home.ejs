@@ -21,8 +21,17 @@
                     <li id="post-<%= post._id%>">
                         <div class="title-close">
                             <h3><%=post.title%><span class="post-user-name"> - <%= post.user.name%></span></h3>
+                            <% if(locals.user) { %>
+                                <a class="like-post-btn" href="/users/posts/like/<%=post._id%>">
+                                    <span>Likes</span>
+                                    &nbsp;
+                                    <span>10</span>
+                                </a>
+                            <% } %>
                             <% if(locals.user && locals.user.id == post.user.id){ %>
-                                <a href="/users/posts/destroy/<%= post._id%>" class="delete-post-btn">X</a>
+                                <a href="/users/posts/destroy/<%= post._id%>" class="delete-post-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
                             <% } %>
                         </div>
                         <p><%=post.content%></p>
@@ -41,6 +50,11 @@
                                     <% post.comments.forEach(function(comment) { %>
                                         <li id="comment-<%=comment._id%>">
                                             <p><strong><%= comment.user.name%> : </strong>&nbsp;<%= comment.content %></p>
+                                            <% if(locals.user) { %>
+                                                <a href="/users/comments/like/<%=comment._id%>">
+                                                    <i class="fa-regular fa-thumbs-up"></i>
+                                                </a>
+                                            <% } %>
                                             <% if(locals.user && locals.user.id == comment.user.id){ %> 
                                                 <a href="/users/comments/destroy/<%= comment._id%>" class="delete-comment-btn">x</a>
                                             <% } %>

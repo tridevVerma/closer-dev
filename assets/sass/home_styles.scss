@@ -78,7 +78,6 @@ section > h1{
                     .title-close{
                         display: flex;
                         justify-content: space-between;
-                        align-items: center;
 
                         h3{
                             color: #ff487e;
@@ -86,27 +85,31 @@ section > h1{
                             span{
                                 color: #ffedff;
                             }
+                            flex-grow: 1;
                         }
 
-                        a{
-                            position: absolute;
-                            right: -20px;
-                            top: -20px;
-                            cursor: pointer;
-                            width: 50px;
-                            height: 50px;
-                            background-color: #ff487e;
-                            color: #fff !important;
-                            padding:1rem;
-                            border-radius: 50%;
-                            text-align: center;
-                            font-size: 1.2rem;
-                            font-weight: bold;
-
+                        .like-post-btn{
+                            height: fit-content;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            width: fit-content;
+                            padding: 4px 8px;
+                            font-size: 1rem;
+                            color: #ff487e;
+                            margin-right: 1rem;
+                            border-radius: 3px;
+                            border: 2px solid #ff487e;
                             &:hover{
-                                
-                                background-color: #f40968;
+                                background-color: #ff487e;
+                                color: #fff;
                             }
+                        }
+                        .delete-post-btn{
+                            cursor: pointer;
+                            color: #ff487e !important;
+                            font-size: 1.4rem;
+                            font-weight: bold;
                         }
                     }
 
@@ -200,6 +203,7 @@ section > h1{
 
                                     & > p{
                                         color: #fff;
+                                        flex-grow: 1;
                                         & > strong{
                                             color: #ff487e;
                                         }

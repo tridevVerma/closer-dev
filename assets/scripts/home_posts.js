@@ -33,7 +33,14 @@
         return $(`<li id="post-${post._id}">
         <div class="title-close">
             <h3>${post.title} - <span class="post-user-name">${username}</span></h3>
-            <a href="/users/posts/destroy/${post._id}" class="delete-post-btn"><h3>X</h3></a>
+            <a class="like-post-btn" href="/users/posts/like/${post._id}">
+                <span>Likes</span>
+                &nbsp;
+                <span>10</span>
+            </a>
+            <a href="/users/posts/destroy/${post._id}" class="delete-post-btn">
+                <i class="fa-solid fa-trash"></i>
+            </a>
             
         </div>
         <p>${post.content}</p>

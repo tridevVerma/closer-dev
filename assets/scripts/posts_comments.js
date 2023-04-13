@@ -42,6 +42,9 @@ class PostComments{
     newCommentDom = function(comment, username){
         return $(`<li id="comment-${comment._id}">
         <p><strong>${username} : </strong>&nbsp;${comment.content}</p>
+        <a href="/users/comments/like/${comment._id}">
+            <i class="fa-regular fa-thumbs-up"></i>
+        </a>
         <a href="/users/comments/destroy/${comment._id}" class="delete-comment-btn">x</a>
     </li>`)
     }
