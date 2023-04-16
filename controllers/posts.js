@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const Like = require('../models/Like');
 
 // Add User's Post
 
@@ -35,8 +36,11 @@ module.exports.destroyPost = async (req, res) => {
 
         // .id means converting _id to string format
         if(post.user == req.user.id){
+            await Like.deleteMany({parent: req.params.id, onModel: 'Post'});
+            await Like.deleteMany({_id: {$in: post.comments}});
+            
             await Comment.deleteMany({post: req.params.id});
-
+            
             if(req.xhr){
                 return res.status(200).json({
                     data: {

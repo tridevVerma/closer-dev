@@ -6,6 +6,7 @@ const usersController = require('../controllers/users')
 const ordersController = require('../controllers/orders');
 const postsController = require('../controllers/posts');
 const commentsController = require('../controllers/comments');
+const likesController = require('../controllers/likes');
 
 router.get('/view_profile/:id', passport.checkAuthentication, usersController.profile);
 router.post('/profile-update/:id', passport.checkAuthentication, usersController.updateProfile);
@@ -20,6 +21,10 @@ router.get('/posts/destroy/:id', passport.checkAuthentication, postsController.d
 
 router.post('/comments/create', passport.checkAuthentication, commentsController.createComment);
 router.get('/comments/destroy/:id', passport.checkAuthentication, commentsController.destroyComment);
+
+// Likes routing
+
+router.get('/like', passport.checkAuthentication, likesController.like);
 
 router.get('/reset-pwd', usersController.view_Reset);
 router.post('/reset-pwd', usersController.createToken);

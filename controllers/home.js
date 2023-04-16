@@ -1,3 +1,4 @@
+const Like = require('../models/Like');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
@@ -35,6 +36,10 @@ module.exports.home = async function(req, res){
         .sort({'createdAt': -1})
         .populate('user', 'name email')
         .populate({
+            path: 'likes',
+            
+        })
+        .populate({
             path: 'comments',
             options: { sort: { 'createdAt': -1}},
             populate: {
@@ -48,7 +53,7 @@ module.exports.home = async function(req, res){
         return res.render('Home', {
             title : 'Home',
             posts,
-            all_users : users
+            all_users : users,
         })
     } catch (error) {
         console.log("ERROR :", error);

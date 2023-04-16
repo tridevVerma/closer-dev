@@ -3,7 +3,6 @@ class PostComments{
         this.postId = postId;
         this.postContainer = $(`#post-${postId}`);
         this.newCommentForm = $(`#post-${postId}-comment-form`);
-
         this.createComment(postId);
 
         // method to add ajax deletion to posts which are already present
@@ -11,7 +10,10 @@ class PostComments{
         let classThis = this;
         $(this.postContainer).find('.delete-comment-btn').each(function(index, btnLink){
             classThis.deleteComment(btnLink);
-        } )
+        } );
+        $(this.postContainer).find('.like-comment-btn').each(function(index, btnLink){
+            classThis.likeComment(btnLink);
+        })
     }
 
     createComment = function(postId){
@@ -42,8 +44,9 @@ class PostComments{
     newCommentDom = function(comment, username){
         return $(`<li id="comment-${comment._id}">
         <p><strong>${username} : </strong>&nbsp;${comment.content}</p>
-        <a href="/users/comments/like/${comment._id}">
+        <a class="like-comment-btn" href="/users/like/?type=Comment&id=${comment._id}">
             <i class="fa-regular fa-thumbs-up"></i>
+            <span class="comment-likes-count">0</span>
         </a>
         <a href="/users/comments/destroy/${comment._id}" class="delete-comment-btn">x</a>
     </li>`)
@@ -59,6 +62,26 @@ class PostComments{
                 success: function(data){
                     $(`#comment-${data.data.comment_id}`).remove();
                     classThis.notifyMsg("Comment removed!!", "success");
+                },
+                error: function(err){
+                    classThis.notifyMsg(err.responseText, "error");
+                }
+            })
+        })
+    }
+
+    // like/dislike comment
+
+    likeComment(likeLink){
+        let classThis = this;
+        $(likeLink).click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'get',
+                url: $(likeLink).prop('href'),
+                success: function(data){
+                    $(likeLink).children('.comment-likes-count').text(data.count);
+                    classThis.notifyMsg("comment liked", "success");
                 },
                 error: function(err){
                     classThis.notifyMsg(err.responseText, "error");

@@ -63,6 +63,8 @@ module.exports.destroyComment = async (req, res) => {
 
             await Post.findByIdAndUpdate(postId, { $pull : {comments : req.params.id}});
 
+            await Like.deleteMany({parent: req.params.id, onModel: 'Comment'});
+            
             if(req.xhr){
                 return res.status(200).json({
                     data: {

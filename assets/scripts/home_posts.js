@@ -33,10 +33,10 @@
         return $(`<li id="post-${post._id}">
         <div class="title-close">
             <h3>${post.title} - <span class="post-user-name">${username}</span></h3>
-            <a class="like-post-btn" href="/users/posts/like/${post._id}">
+            <a class="like-post-btn" href="/users/like/?type=Post&id=${post._id}">
                 <span>Likes</span>
                 &nbsp;
-                <span>10</span>
+                <span class="post-likes-count">0</span>
             </a>
             <a href="/users/posts/destroy/${post._id}" class="delete-post-btn">
                 <i class="fa-solid fa-trash"></i>
@@ -82,6 +82,24 @@
         })
     }
 
+    // method to like post
+    let likePost = function(likeLink){
+        $(likeLink).click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "get",
+                url: $(likeLink).prop('href'),
+                success: function(data){
+                    $(likeLink).children('.post-likes-count').text(data.count);
+                    notifyMsg("You just liked the post", "success");
+                },
+                error: function(err){
+                    notifyMsg(err.responseText, "error");
+                }
+            })
+        })
+    }
+
     // method to call noty
     let notifyMsg = function(textMsg, typeMsg){
         new Noty({
@@ -97,6 +115,7 @@
     let addAjax = function(){
         $('.show-posts>ul>li').each(function(index, post){
             deletePost($(post).find('.delete-post-btn'));
+            likePost($(post).find('.like-post-btn'));
             let postId = $(post).prop('id').split('-')[1];
             new PostComments(postId);
         })

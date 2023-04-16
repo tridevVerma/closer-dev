@@ -22,10 +22,10 @@
                         <div class="title-close">
                             <h3><%=post.title%><span class="post-user-name"> - <%= post.user.name%></span></h3>
                             <% if(locals.user) { %>
-                                <a class="like-post-btn" href="/users/posts/like/<%=post._id%>">
+                                <a class="like-post-btn" href="/users/like/?type=Post&id=<%=post._id%>">
                                     <span>Likes</span>
                                     &nbsp;
-                                    <span>10</span>
+                                    <span class="post-likes-count"><%=post.likes.length%></span>
                                 </a>
                             <% } %>
                             <% if(locals.user && locals.user.id == post.user.id){ %>
@@ -51,8 +51,9 @@
                                         <li id="comment-<%=comment._id%>">
                                             <p><strong><%= comment.user.name%> : </strong>&nbsp;<%= comment.content %></p>
                                             <% if(locals.user) { %>
-                                                <a href="/users/comments/like/<%=comment._id%>">
+                                                <a class="like-comment-btn" href="/users/like/?type=Comment&id=<%=comment._id%>">
                                                     <i class="fa-regular fa-thumbs-up"></i>
+                                                    <span class="comment-likes-count"><%=comment.likes.length%></span>
                                                 </a>
                                             <% } %>
                                             <% if(locals.user && locals.user.id == comment.user.id){ %> 
@@ -90,7 +91,6 @@
         <h1 class="smiley">🙂</h1>
     <% } %>
 </section>
-
 
 <script src="/scripts/posts_comments.js"></script>
 <script src="/scripts/home_posts.js"></script>
