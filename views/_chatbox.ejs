@@ -1,0 +1,61 @@
+<link rel="stylesheet" href="/css/chatbox_styles.css">
+<!-- Chat-box code -->
+
+<% if (locals.user) { %>
+    <div class="chat-engine">
+        <div class="chat-heading">
+            <h4>Tridev Verma</h4>
+            <a href="#" class="display hide">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+            <a href="#">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
+        </div>
+        <div class="chat-container">
+            <div class="display-msgs">
+                <ul>
+                    <li class="f-text">
+                        <p>Hi there, I am Tridev Verma</p>
+                    </li>
+                    <li class="u-text">
+                        <p>Hello</p>
+                    </li>
+                    <li class="u-text">
+                        <p>Welcome</p>
+                    </li>
+                    <li class="f-text">
+                        <p>Hi there, I am Tridev Verma</p>
+                    </li>
+                    <li class="u-text">
+                        <p>Hello</p>
+                    </li>
+                    <li class="u-text">
+                        <p>Welcome</p>
+                    </li>
+                    <li class="f-text">
+                        <p>Hi there, I am Tridev Verma</p>
+                    </li>
+                    <li class="u-text">
+                        <p>Hello</p>
+                    </li>
+                    <li class="u-text">
+                        <p>Welcome</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="new-msg-form">
+                <form action="#" method="post">
+                    <input type="text" name="newMsgText" id="newMsgText" placeholder="Write your message...">
+                    <button type="submit">
+                        <span>Send</span>
+                        <i class="fa-sharp fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+<% } %>
+
+<script src="/scripts/chatbox.js"></script>

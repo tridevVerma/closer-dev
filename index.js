@@ -11,9 +11,21 @@ var expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const {customFlash} = require('./config/customFlashMiddleware.js');
 const path = require('path');
-
 const app = express();
 const port = 8000;
+// const cors = require("cors");
+
+// app.use(cors());
+
+// chat-box setup
+const chatServer = require('http').Server(app);
+const {chatSockets} = require('./config/socket.js');
+chatSockets(chatServer);
+chatServer.listen(5000, function(){
+    console.log("Chat server listening on port 5000")
+});
+
+
 
 // set up body parser, cookieParser and static files
 app.use(express.urlencoded({extended:true}));
