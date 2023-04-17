@@ -31,6 +31,7 @@ class PostComments{
                     $(commentsList).prepend(newComment);
                     classThis.deleteComment($(newComment).find('.delete-comment-btn'));
                     $(classThis.newCommentForm)[0].reset();
+                    classThis.likeComment($(newComment).find('.like-comment-btn'));
                     classThis.notifyMsg("Comment created!!", "success");
                 },
                 error: function(error){
@@ -81,7 +82,7 @@ class PostComments{
                 url: $(likeLink).prop('href'),
                 success: function(data){
                     $(likeLink).children('.comment-likes-count').text(data.count);
-                    classThis.notifyMsg("comment liked", "success");
+                    classThis.notifyMsg(data.likeAdded ? "comment liked" : "comment disliked", "success");
                 },
                 error: function(err){
                     classThis.notifyMsg(err.responseText, "error");

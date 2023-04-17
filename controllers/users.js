@@ -8,10 +8,20 @@ const resetMailer = require('../mailers/resetMailer');
 // view profile to logged user
 module.exports.profile = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id).populate('freinds', 'name');
+        
+        let removeFreind;
+        for(let f of user.freinds){
+            if(f.id === req.user.id){
+                removeFreind = true;
+                break;
+            }
+        }
+        
         res.render('Users', {
             title : "User's Profile",
-            profile_user : user
+            profile_user : user,
+            removeFreind
         });
     } catch (err) {
         console.log("Can't find user in DB to view profile", err); return;
@@ -124,7 +134,7 @@ module.exports.createSession = (req, res) => {
 
 // logout user
 module.exports.destroySession = (req, res) => {
-    console.log(req.params); // user Id = req.params.id
+    // user Id = req.params.id
     req.logout(function(err) {
         if (err) { return next(err); }
         req.flash('success', "You have logged out!!");
@@ -157,7 +167,7 @@ module.exports.createToken = async function(req, res){
                     token: crypto.randomBytes(20).toString('hex')
                 });
             }
-            console.log('token', token);
+            // console.log('token', token);
             const resetLink = `http://localhost:8000/users/reset-pwd/${user.id}/${token.token}`;
             resetMailer.resetPWD({name: user.name, email: user.email}, resetLink);
             return res.redirect('back');        

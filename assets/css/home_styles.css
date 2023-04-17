@@ -167,6 +167,8 @@ section > h1 {
   background: #0f1021;
   padding-left: 2rem;
   padding-right: 2rem; }
+  #users-freinds > hr {
+    margin-top: 2rem; }
   #users-freinds > h1 {
     color: #fff; }
   #users-freinds > .smiley {

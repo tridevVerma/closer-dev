@@ -78,10 +78,10 @@
     <% if(locals.user) { %>
         <h1>Freinds</h1>
         <ul>
-            <% for (u of all_users) { %>
+            <% for (f of all_freinds) { %>
                 <li>
-                    <a href="/users/view_profile/<%= u.id%>">
-                        <p><%= u.name%></p>
+                    <a href="/users/view_profile/<%= f.id%>">
+                        <p><%= f.name%></p>
                     </a>
                 </li>
             <% } %>
@@ -90,6 +90,20 @@
         <h1>Login to view Friends</h1>
         <h1 class="smiley">🙂</h1>
     <% } %>
+
+    <hr>
+
+    <h1>All Users</h1>
+
+    <ul>
+        <% for (u of all_users) { %>
+            <li>
+                <a href="/users/view_profile/<%= u.id%>">
+                    <p><%= u.name%></p>
+                </a>
+            </li>
+        <% } %>
+    </ul>    
 </section>
 
 <script src="/scripts/posts_comments.js"></script>

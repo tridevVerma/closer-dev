@@ -23,10 +23,20 @@
                 <img src="<%= profile_user.avatar%>" alt="<%= profile_user.name%>" class="profile-picture-large">
             </div>
         <% } %>
+
+        <% if(locals.user && locals.user.id != profile_user.id){ %>
+            
+            <%if(removeFreind){%>
+                <a class="remove-freind-btn" href="/users/remove-freind/<%=profile_user.id%>">Remove Freind</a>    
+            <%}else{%>
+                <a class="add-freind-btn" href="/users/add-freind/<%=profile_user.id%>">Add Freind</a>
+            <%} %>
+        <% } %>
         
         <h1>Name : <%=profile_user.name%></h1>
         <h1>Email : <%=profile_user.email%></h1>
     <% } %>
 </section>
 
+<script src="/scripts/freinds.js"></script>
     

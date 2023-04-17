@@ -30,6 +30,21 @@
         }
     }
 
+    & > .add-freind-btn, & > .remove-freind-btn{
+        padding: 12px 25px;
+        font-size: 1.5rem;
+        border: none;
+        background-color: rgb(250, 56, 88);
+        border: 2px double #fff;
+        color: #fff;
+        width: 25%;
+        text-align: center;
+
+        &:hover{
+            background-color: rgb(255, 50, 120);
+        }
+    }
+
     & > .profile-pic-container{
         width: 250px;
         height: 250px;

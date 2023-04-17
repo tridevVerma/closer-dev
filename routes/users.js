@@ -7,6 +7,7 @@ const ordersController = require('../controllers/orders');
 const postsController = require('../controllers/posts');
 const commentsController = require('../controllers/comments');
 const likesController = require('../controllers/likes');
+const freindController = require('../controllers/freinds');
 
 router.get('/view_profile/:id', passport.checkAuthentication, usersController.profile);
 router.post('/profile-update/:id', passport.checkAuthentication, usersController.updateProfile);
@@ -26,6 +27,12 @@ router.get('/comments/destroy/:id', passport.checkAuthentication, commentsContro
 
 router.get('/like', passport.checkAuthentication, likesController.like);
 
+// freinds routing
+
+router.get('/add-freind/:id', passport.checkAuthentication, freindController.add);
+router.get('/remove-freind/:id', passport.checkAuthentication, freindController.remove);
+
+// reset password
 router.get('/reset-pwd', usersController.view_Reset);
 router.post('/reset-pwd', usersController.createToken);
 router.post('/reset-pwd/:id/:token', usersController.resetPwd);

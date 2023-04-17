@@ -5,7 +5,7 @@ const Comment = require('../models/Comment');
 module.exports.like = async(req, res) => {
     try {
         const {type, id} = req.query;
-        let parentType;
+        let parentType, likeAdded = false;
 
         if(type === 'Post'){
             parentType = await Post.findById(id).populate('likes');
@@ -29,6 +29,7 @@ module.exports.like = async(req, res) => {
             await parentType.likes.pull(existingLike._id);
             await parentType.save();
             await Like.deleteOne({_id: existingLike.id});
+            likeAdded = false;
         }else{
             let newLike = await Like.create({
                 user: req.user._id,
@@ -37,11 +38,13 @@ module.exports.like = async(req, res) => {
             });
             await parentType.likes.push(newLike._id);
             await parentType.save();
+            likeAdded = true;
         }
 
         return res.status(200).json({
             message: "successfully liked post/comment",
-            count: parentType.likes.length
+            count: parentType.likes.length,
+            likeAdded
         });
 
         // if(type === 'Post'){

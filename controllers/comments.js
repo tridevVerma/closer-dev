@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const Post = require('../models/Post');
+const Like = require('../models/Like');
 const commentMailer = require('../mailers/commentMailer');
 const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_email_worker');
@@ -25,16 +26,16 @@ module.exports.createComment = async (req, res) => {
             });
             
             // commentMailer.newComment(comment);
-            let job = queue.create('emails', comment).save(err => {
-                if(err){
-                    console.log('Error in creating queue', err);
-                    return;
-                }
-                console.log('job enqueued', job.id);
-            })
+            // let job = queue.create('emails', comment).save(err => {
+            //     if(err){
+            //         console.log('Error in creating queue', err);
+            //         return;
+            //     }
+            //     console.log('job enqueued', job.id);
+            // })
 
             if(req.xhr){
-                console.log("new comment", comment)
+                // console.log("new comment", comment)
                 return res.status(201).json({
                     data: {
                         comment,
@@ -47,7 +48,7 @@ module.exports.createComment = async (req, res) => {
             res.redirect('/');
         }
         else{
-            console.log("post not existing");
+            console.log("post does not exist");
             return res.redirect('back');
         }
     } catch (err) {
@@ -58,7 +59,7 @@ module.exports.createComment = async (req, res) => {
 module.exports.destroyComment = async (req, res) => {
     try {
         const comment = await Comment.findByIdAndDelete(req.params.id);
-        if(comment.user == req.user.id){
+        if(comment && comment.user == req.user.id){
             let postId = comment.post;
 
             await Post.findByIdAndUpdate(postId, { $pull : {comments : req.params.id}});

@@ -17,6 +17,7 @@
                     deletePost($(' .delete-post-btn', newPost));
                     new PostComments(data.data.post._id);
                     $(newPostForm)[0].reset();
+                    likePost($(newPost).find('.like-post-btn'));
                     notifyMsg("Post published!!", "success");
                 },
                 error: function(err){
@@ -91,7 +92,7 @@
                 url: $(likeLink).prop('href'),
                 success: function(data){
                     $(likeLink).children('.post-likes-count').text(data.count);
-                    notifyMsg("You just liked the post", "success");
+                    notifyMsg(data.likeAdded ? "You just liked the post" : "You just disliked the post", "success");
                 },
                 error: function(err){
                     notifyMsg(err.responseText, "error");

@@ -48,12 +48,16 @@ module.exports.home = async function(req, res){
             }
         });
 
-        let users = await User.find({});
-
+        let users = await User.find().populate('freinds','name');
+        let loggedUser;
+        if(req.user){
+            loggedUser = await User.findById(req.user.id).populate('freinds', 'name');
+        }
         return res.render('Home', {
             title : 'Home',
             posts,
             all_users : users,
+            all_freinds: req.user ? loggedUser.freinds : null
         })
     } catch (error) {
         console.log("ERROR :", error);

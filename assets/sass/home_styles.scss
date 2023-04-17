@@ -240,6 +240,10 @@ section > h1{
     padding-left: 2rem;
     padding-right: 2rem;
 
+    & > hr{
+        margin-top: 2rem;
+    }
+    
     & > h1{
         color: #fff
     }
