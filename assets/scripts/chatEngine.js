@@ -25,6 +25,32 @@ class chatEngine{
             })
         });
 
+        $('#new-msg-form').submit(function(e){
+            e.preventDefault();
+            let msg = $('#newMsgText').val();
+
+            if(msg != ''){
+                self.socket.emit('send-msg',{
+                    message: msg,
+                    userEmail: self.userEmail,
+                    chatroom: 'closer'
+                });
+                $('#newMsgText').val('');
+            }
+        });
+
+        self.socket.on('receive-msg', function(data){
+            
+            let userType = 'f-text';
+            if(data.userEmail == self.userEmail){
+                userType = 'u-text';
+            }
+
+            let newMsg = `<li class='${userType}'><p>${data.message}</p></li>`
+
+            $('.display-msgs > ul').append(newMsg);
+        })
+
 
     }
 }

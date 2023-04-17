@@ -10,6 +10,10 @@ module.exports.chatSockets = (chatServer) => {
         socket.on('join_room', function(data){
             socket.join(data.chatroom);
             io.in(data.chatroom).emit('user_joined', data);
+        });
+
+        socket.on('send-msg', function(data){
+            io.in(data.chatroom).emit('receive-msg', data);
         })
     })
 }

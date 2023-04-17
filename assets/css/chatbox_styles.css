@@ -54,17 +54,17 @@
         color: #ddd;
         margin-left: auto;
         background-color: #007AFF; }
-    .chat-engine > .chat-container > .new-msg-form form {
+    .chat-engine > .chat-container > .new-msg-form-container #new-msg-form {
       width: 100%;
       display: flex;
       justify-content: space-between; }
-      .chat-engine > .chat-container > .new-msg-form form > input[type="text"] {
+      .chat-engine > .chat-container > .new-msg-form-container #new-msg-form > input[type="text"] {
         flex-grow: 1;
         font-size: 0.9rem;
         padding: 6px 10px;
         border: none;
         outline: none; }
-      .chat-engine > .chat-container > .new-msg-form form > button {
+      .chat-engine > .chat-container > .new-msg-form-container #new-msg-form > button {
         background-color: #007aff;
         color: #ddd;
         padding: 8px;
@@ -72,8 +72,8 @@
         width: 80px;
         border: none;
         outline: none; }
-        .chat-engine > .chat-container > .new-msg-form form > button:hover {
+        .chat-engine > .chat-container > .new-msg-form-container #new-msg-form > button:hover {
           cursor: pointer;
           background-color: #0062ca; }
-        .chat-engine > .chat-container > .new-msg-form form > button > span {
+        .chat-engine > .chat-container > .new-msg-form-container #new-msg-form > button > span {
           margin-right: 4px; }
