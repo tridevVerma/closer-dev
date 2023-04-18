@@ -10,28 +10,24 @@ const MongoStore = require('connect-mongo');
 var expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const {customFlash} = require('./config/customFlashMiddleware.js');
+const env = require('./config/environment.js');
 const path = require('path');
 const app = express();
-const port = 8000;
-// const cors = require("cors");
-
-// app.use(cors());
+const port = env.server_port;
 
 // chat-box setup
 const chatServer = require('http').Server(app);
 const {chatSockets} = require('./config/socket.js');
 chatSockets(chatServer);
-chatServer.listen(5000, function(){
-    console.log("Chat server listening on port 5000")
+chatServer.listen(env.socket_port, function(){
+    console.log(`Chat server listening on port ${env.socket_port}`)
 });
-
-
 
 // set up body parser, cookieParser and static files
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
-app.use(express.static('assets'));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));   // make the upload path available to the browser
+app.use(express.static(env.asset_path));
+app.use(env.upload_path, express.static(path.join(__dirname, env.upload_path)));   // make the upload path available to the browser
 
 // set up express-ejs-layouts
 app.use(expressLayouts);
@@ -40,19 +36,19 @@ app.set("layout extractStyles", true)
 
 // set up ejs
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', env.views_path);
 
 // Mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'closer',
     // Todo change the secret before deployment in production mode
-    secret: 'blahsomething',
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
     },
-    store: MongoStore.create({mongoUrl: "mongodb://127.0.0.1:27017/closer_development"}),
+    store: MongoStore.create({mongoUrl: `mongodb://${env.mongodb_domain_name}:${env.mongodb_port}/${env.db_name}`}),
 }));
 
 app.use(passport.initialize());

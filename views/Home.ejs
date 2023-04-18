@@ -7,104 +7,12 @@
             <h2><%= user.name%>'s posts</h2>
         <% } %>
     
-        <% if (locals.user) { %>
-        <form id="new-post-form" method="POST" action="/users/posts/create">
-            <input type="text" name="post-title" id="post-title" placeholder="Post title here ...">
-            <textarea name="post-content" id="post-content" cols="60" rows="20" placeholder="Post content here ..."></textarea>
-            <input type="submit" value="Post">
-        </form>
-        <% } %>
-        <div class="show-posts">
-            <h2>Show Posts Here</h2>
-            <ul>
-                <% for (let post of posts ) { %>
-                    <li id="post-<%= post._id%>">
-                        <div class="title-close">
-                            <h3><%=post.title%><span class="post-user-name"> - <%= post.user.name%></span></h3>
-                            <% if(locals.user) { %>
-                                <a class="like-post-btn" href="/users/like/?type=Post&id=<%=post._id%>">
-                                    <span>Likes</span>
-                                    &nbsp;
-                                    <span class="post-likes-count"><%=post.likes.length%></span>
-                                </a>
-                            <% } %>
-                            <% if(locals.user && locals.user.id == post.user.id){ %>
-                                <a href="/users/posts/destroy/<%= post._id%>" class="delete-post-btn">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
-                            <% } %>
-                        </div>
-                        <p><%=post.content%></p>
-                        <div class="comments-section">
-                            <% if (locals.user) { %>
-                                <form id="post-<%=post._id%>-comment-form" method="POST" action="/users/comments/create" class="new-comment-form">
-                                    <input type="text" name="comment-content" placeholder="Comment here ....">
-                                    <input type="hidden" name="post" value="<%=post._id%>">
-                                    <input type="submit" value="Submit">
-                                </form>
-                            <% } else { %>
-                                <a href="/users/login"><h1>Log in to write comments</h1></a>
-                            <% } %>
-                            <div class="show-comments">
-                                <ul id="comment-post-id-<%= post._id%>">
-                                    <% post.comments.forEach(function(comment) { %>
-                                        <li id="comment-<%=comment._id%>">
-                                            <p><strong><%= comment.user.name%> : </strong>&nbsp;<%= comment.content %></p>
-                                            <% if(locals.user) { %>
-                                                <a class="like-comment-btn" href="/users/like/?type=Comment&id=<%=comment._id%>">
-                                                    <i class="fa-regular fa-thumbs-up"></i>
-                                                    <span class="comment-likes-count"><%=comment.likes.length%></span>
-                                                </a>
-                                            <% } %>
-                                            <% if(locals.user && locals.user.id == comment.user.id){ %> 
-                                                <a href="/users/comments/destroy/<%= comment._id%>" class="delete-comment-btn">x</a>
-                                            <% } %>
-                                        </li>
-                                    <% }) %>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                    </li>
-                <% } %>
-            </ul>
-    
-        </div>
+        <%- include('partials/_post'); -%>
     </section>
 </section>
 
 
-<section id="users-freinds">
-    <% if(locals.user) { %>
-        <h1>Freinds</h1>
-        <ul>
-            <% for (f of all_freinds) { %>
-                <li>
-                    <a href="/users/view_profile/<%= f.id%>">
-                        <p><%= f.name%></p>
-                    </a>
-                </li>
-            <% } %>
-        </ul>    
-    <% } else { %>
-        <h1>Login to view Friends</h1>
-        <h1 class="smiley">🙂</h1>
-    <% } %>
-
-    <hr>
-
-    <h1>All Users</h1>
-
-    <ul>
-        <% for (u of all_users) { %>
-            <li>
-                <a href="/users/view_profile/<%= u.id%>">
-                    <p><%= u.name%></p>
-                </a>
-            </li>
-        <% } %>
-    </ul>    
-</section>
+<%- include('partials/_sidebar'); -%>
 
 <script src="/scripts/posts_comments.js"></script>
 <script src="/scripts/home_posts.js"></script>

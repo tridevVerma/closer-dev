@@ -46,61 +46,6 @@ module.exports.like = async(req, res) => {
             count: parentType.likes.length,
             likeAdded
         });
-
-        // if(type === 'Post'){
-        //     const post = await Post.findById(id).populate('likes');
-            
-        //     if(post){
-        //         newLike = await Like.findOne({parent: id});
-
-        //         if(newLike){
-        //             // like exists
-
-        //             await Like.findOneAndDelete({_id: newLike.id});
-        //             await Post.findOneAndUpdate({_id: id}, {$pull: {likes: newLike.id}});
-        //         }
-        //         else{
-        //             // like don't exists
-        //             newLike = await Like.create({
-        //                 user: req.user.id,
-        //                 parent: id,
-        //                 onModel: type
-        //             });
-
-        //             await Post.findOneAndUpdate({_id: id}, {$push: {likes: newLike.id}});
-        //         }
-        //     }
-        //     else{
-        //         return res.status(401).redirect('back');
-        //     }
-        // }
-        // else{
-        //     const comment = await Comment.findById(id);
-        //     if(comment){
-        //         newLike = await Like.findOne({parent: id});
-        //         if(newLike){
-        //             // like exists
-
-        //             await Like.findOneAndDelete({_id: newLike.id});
-        //             await Comment.findOneAndUpdate({_id: id}, {$pull: {likes: newLike.id}});
-        //         }
-        //         else{
-        //             // like don't exists
-
-        //             newLike = await Like.create({
-        //                 user: req.user.id,
-        //                 parent: id,
-        //                 onModel: type
-        //             });
-
-        //             await Comment.findOneAndUpdate({_id: id}, {$push: {likes: newLike.id}});
-        //         }
-        //     }
-        //     else{
-        //         return res.status(401).redirect('back');
-        //     }
-        // }
-        
         
     } catch (err) {
         console.log("Error in Likes:", err);
@@ -108,5 +53,4 @@ module.exports.like = async(req, res) => {
             message: "Error occurred while liking post/comment",
         });
     }
-    return res.status(200).redirect('back');
 }

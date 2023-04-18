@@ -1,3 +1,4 @@
+const env = require('../config/environment');
 const path = require('path');
 const fs = require('fs');
 const User = require('../models/User');
@@ -30,18 +31,6 @@ module.exports.profile = async (req, res) => {
 
 // update profile of logged user
 module.exports.updateProfile = async (req, res) => {
-    // try {
-    //     if(req.user.id == req.params.id){
-    //         await User.findByIdAndUpdate(req.params.id, req.body);
-    //         req.flash('success', "Profile Updated!!")
-    //         return res.redirect('back');
-    //     }
-    //     else{
-    //         return res.status(401).redirect('back');
-    //     }
-    // } catch (err) {
-    //     console.log("can't update users profile", err); return; 
-    // }
 
     /** With Multer **/
 
@@ -159,7 +148,7 @@ module.exports.createToken = async function(req, res){
     try {
         const user = await User.findOne({email: req.body.email})
         if(user){
-            console.log(req.body.email);
+            
             let token = await Token.findOne({userID: user._id});
             if(!token){
                 token = await Token.create({
@@ -168,9 +157,11 @@ module.exports.createToken = async function(req, res){
                 });
             }
             // console.log('token', token);
-            const resetLink = `http://localhost:8000/users/reset-pwd/${user.id}/${token.token}`;
+            const resetLink = `http://${env.domain_name}:${env.server_port}/users/reset-pwd/${user.id}/${token.token}`;
             resetMailer.resetPWD({name: user.name, email: user.email}, resetLink);
-            return res.redirect('back');        
+            return res.render('CheckMail', {
+                title: "Check your email"
+            });        
         }
         else{
             req.flash('error', "No user found with given email!");

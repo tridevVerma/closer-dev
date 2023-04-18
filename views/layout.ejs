@@ -16,13 +16,13 @@
     <%- style %>
 </head>
 <body>
-    <%- include('_header'); -%>
+    <%- include('partials/_header'); -%>
     
     <main>
         <%- body %>
     </main>
 
-    <%- include('_chatbox'); -%>
+    <%- include('partials/_chatbox'); -%>
     <script>
         <% if(flash.success && flash.success.length > 0) { %> 
             new Noty({

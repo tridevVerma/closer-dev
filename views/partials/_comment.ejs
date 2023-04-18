@@ -1,0 +1,29 @@
+<div class="comments-section">
+    <% if (locals.user) { %>
+        <form id="post-<%=post._id%>-comment-form" method="POST" action="/users/comments/create" class="new-comment-form">
+            <input type="text" name="comment-content" placeholder="Comment here ....">
+            <input type="hidden" name="post" value="<%=post._id%>">
+            <input type="submit" value="Submit">
+        </form>
+    <% } else { %>
+        <a href="/users/login"><h1>Log in to write comments</h1></a>
+    <% } %>
+    <div class="show-comments">
+        <ul id="comment-post-id-<%= post._id%>">
+            <% post.comments.forEach(function(comment) { %>
+                <li id="comment-<%=comment._id%>">
+                    <p><strong><%= comment.user.name%> : </strong>&nbsp;<%= comment.content %></p>
+                    <% if(locals.user) { %>
+                        <a class="like-comment-btn" href="/users/like/?type=Comment&id=<%=comment._id%>">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            <span class="comment-likes-count"><%=comment.likes.length%></span>
+                        </a>
+                    <% } %>
+                    <% if(locals.user && locals.user.id == comment.user.id){ %> 
+                        <a href="/users/comments/destroy/<%= comment._id%>" class="delete-comment-btn">x</a>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</div>
