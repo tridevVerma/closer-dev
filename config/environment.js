@@ -1,3 +1,16 @@
+const fs = require('fs');
+const rfs = require('rotating-file-stream');
+const path = require('path');
+
+const logDirectory = path.join(__dirname, '../production_logs');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+// create a rotating write stream
+var accessLogStream = rfs.createStream('access.log', {
+    interval: '1d', // rotate daily
+    path: logDirectory
+})
+
 const development = {
     name: 'development',
     domain_name: 'localhost',
@@ -24,7 +37,11 @@ const development = {
     server_email: 'tv072000@gmail.com',
     server_port: 8000,
     mongodb_port: 27017,
-    socket_port: 5000
+    socket_port: 5000,
+    morgan: {
+        mode: 'dev',
+        options: {stream : accessLogStream}
+    }
 };
 
 const production = {
@@ -53,7 +70,11 @@ const production = {
     server_email: process.env.CLOSER_SERVER_EMAIL,
     server_port: process.env.CLOSER_SERVER_PORT,
     mongodb_port: process.env.CLOSER_MONGODB_PORT,
-    socket_port: process.env.CLOSER_SOCKET_PORT
+    socket_port: process.env.CLOSER_SOCKET_PORT,
+    morgan: {
+        mode: 'combined',
+        options: {stream : accessLogStream}
+    }
 };
 
 module.exports = eval(process.env.NODE_ENV) == undefined ? development : eval(process.env.NODE_ENV);

@@ -11,6 +11,7 @@ var expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const {customFlash} = require('./config/customFlashMiddleware.js');
 const env = require('./config/environment.js');
+const logger = require('morgan')
 const path = require('path');
 const app = express();
 const port = env.server_port;
@@ -28,6 +29,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static(env.asset_path));
 app.use(env.upload_path, express.static(path.join(__dirname, env.upload_path)));   // make the upload path available to the browser
+
+app.use(logger(env.morgan.mode, env.morgan.options));
 
 // set up express-ejs-layouts
 app.use(expressLayouts);
