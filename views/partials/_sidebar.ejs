@@ -7,6 +7,9 @@
                     <a href="/users/view_profile/<%= f.id%>">
                         <p><%= f.name%></p>
                     </a>
+                    <a href="/users/chat-now/<%=f.id%>" class="chat-now">
+                        <img src="/images/chatting.png" alt="chat-now-icon">
+                    </a>
                 </li>
             <% } %>
         </ul>    

@@ -4,10 +4,6 @@ class chatEngine{
         this.userEmail = userEmail;
 
         this.socket = io.connect(`http://localhost:5000`);
-
-        if(this.userEmail){
-            this.connectionHandler();
-        }
     }
 
     connectionHandler(){
@@ -38,6 +34,12 @@ class chatEngine{
                 $('#newMsgText').val('');
             }
         });
+
+        $('.remove-chat-box').click(function(e){
+            e.preventDefault();
+            self.socket.disconnect(true);
+            $('.chat-engine').empty();
+        })
 
         self.socket.on('receive-msg', function(data){
             

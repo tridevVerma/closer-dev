@@ -57,3 +57,19 @@ module.exports.remove = async (req, res) => {
     }
     
 }
+
+module.exports.chatting = async (req, res) => {
+    const id = req.params.id;
+    if(req.xhr){
+        try {
+            const user = await User.findById(id);
+            return res.status(200).json({message: "successfully initiated chat!!", name: user.name, email: user.email});    
+        } catch (err) {
+            console.log("Error occurred while initiating chat:", err);
+            return res.status(500).json({message: "failed to initiate chat!!"});
+        }
+        
+    }
+
+    return res.status(400).redirect('back');
+}

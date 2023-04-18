@@ -51,7 +51,7 @@ module.exports.home = async function(req, res){
         let users = await User.find().populate('freinds','name');
         let loggedUser;
         if(req.user){
-            loggedUser = await User.findById(req.user.id).populate('freinds', 'name');
+            loggedUser = await User.findById(req.user.id).populate('freinds', 'name email');
         }
         return res.render('Home', {
             title : 'Home',

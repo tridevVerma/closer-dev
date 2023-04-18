@@ -31,6 +31,7 @@ router.get('/like', passport.checkAuthentication, likesController.like);
 
 router.get('/add-freind/:id', passport.checkAuthentication, freindController.add);
 router.get('/remove-freind/:id', passport.checkAuthentication, freindController.remove);
+router.get('/chat-now/:id', passport.checkAuthentication, freindController.chatting);
 
 // reset password
 router.get('/reset-pwd', usersController.view_Reset);

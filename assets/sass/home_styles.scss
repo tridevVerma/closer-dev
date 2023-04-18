@@ -263,9 +263,16 @@ section > h1{
             background-color: #ff487e;
             margin: 1rem auto;
             padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
             & > a{
                 font-size: 1.5rem;
                 color: #fff;
+                
+                & > img{
+                    width: 35px;
+                }
             }
         }
     }
