@@ -1,3 +1,4 @@
+// *********** Class to create comment-container attached to each post **********
 class PostComments{
     constructor(postId){
         this.postId = postId;
@@ -6,7 +7,6 @@ class PostComments{
         this.createComment(postId);
 
         // method to add ajax deletion to posts which are already present
-
         let classThis = this;
         $(this.postContainer).find('.delete-comment-btn').each(function(index, btnLink){
             classThis.deleteComment(btnLink);
@@ -15,6 +15,8 @@ class PostComments{
             classThis.likeComment(btnLink);
         })
     }
+
+    // Create new comment
 
     createComment = function(postId){
         let classThis = this;
@@ -26,11 +28,14 @@ class PostComments{
                 url: "/users/comments/create",
                 data: $(this.newCommentForm).serialize(),
                 success: function(data){
+                    // Create new-comment UI and append it to comments-list
                     let newComment = classThis.newCommentDom(data.data.comment, data.data.username);
                     let commentsList = $(`#comment-post-id-${postId}`);
                     $(commentsList).prepend(newComment);
-                    classThis.deleteComment($(newComment).find('.delete-comment-btn'));
                     $(classThis.newCommentForm)[0].reset();
+
+                    // Call listener to activate delete and like to new-comment
+                    classThis.deleteComment($(newComment).find('.delete-comment-btn'));
                     classThis.likeComment($(newComment).find('.like-comment-btn'));
                     classThis.notifyMsg("Comment created!!", "success");
                 },
@@ -42,6 +47,7 @@ class PostComments{
         
     }
 
+    // Creating UI of new-comment for DOM
     newCommentDom = function(comment, username){
         return $(`<li id="comment-${comment._id}">
         <p><strong>${username} : </strong>&nbsp;${comment.content}</p>
@@ -53,6 +59,7 @@ class PostComments{
     </li>`)
     }
     
+    // Delete comment listener
     deleteComment = function(deleteLink){
         let classThis = this;
         $(deleteLink).click(function(e){
@@ -71,7 +78,7 @@ class PostComments{
         })
     }
 
-    // like/dislike comment
+    // like / dislike comment
 
     likeComment(likeLink){
         let classThis = this;
@@ -81,7 +88,10 @@ class PostComments{
                 type: 'get',
                 url: $(likeLink).prop('href'),
                 success: function(data){
+                    // Get and provide Total likes count on a comment
                     $(likeLink).children('.comment-likes-count').text(data.count);
+
+                    // Check if comment is liked or disliked then create toast message
                     classThis.notifyMsg(data.likeAdded ? "comment liked" : "comment disliked", "success");
                 },
                 error: function(err){

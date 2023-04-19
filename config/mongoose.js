@@ -1,3 +1,4 @@
+// *********** Connecting to mongoose and create DB **********
 const mongoose = require('mongoose');
 const env = require('../config/environment');
 

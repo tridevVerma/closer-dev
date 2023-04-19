@@ -4,17 +4,19 @@ nav{
     top:0%;
     left:0%;
     width: 100%;
+    max-height: 15vh;
 }
 
 nav ul {
     list-style-type: none;
-    background-color: #0f1021;
-    color:#fff;
+    background-color: var(--header-dark);
+    color: var(--white);
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    max-height: inherit;
 
     li a{
         text-decoration: none;
@@ -26,7 +28,7 @@ nav ul {
     .logout-btn{
         font-size: 1.2rem;
         padding: 10px 20px;
-        background-color: #fff;
-        color: #000;
+        background-color: var(--white);
+        color: var(--header-dark);
     }
 }

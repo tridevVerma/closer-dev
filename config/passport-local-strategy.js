@@ -8,8 +8,9 @@ passport.use(new LocalStrategy({
         passReqToCallback: true
     },
     async function(req, email, password, done){
-        // find a user and establish the identity
+        
         try {
+            // Check if User exists ? if(yes) --> return User : else(no) --> throw error
             const user = await User.findOne({email : email});    
             if(!user || user.password !== password){
                 req.flash('error', "Invalid Username / Password");
@@ -52,7 +53,8 @@ passport.checkAuthentication = function(req, res, next){
 
 passport.setAuthenticatedUser = function(req, res, next){
     if(req.isAuthenticated()){
-        // req.user contains the current signed is user from the session cookie and we are just sending this to the locals for the views
+        /** req.user contains the current signed in user from the session cookie
+         and we are just sending this to the locals for the views */
         res.locals.user = req.user;
     }
     next();

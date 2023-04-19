@@ -24,20 +24,20 @@
 
     <%- include('partials/_chatbox'); -%>
     <script>
-        <% if(flash.success && flash.success.length > 0) { %> 
+        <% if(locals.flash.success && locals.flash.success.length > 0) { %> 
             new Noty({
                 theme: 'relax',
-                text: '<%= flash.success%>',
+                text: '<%= locals.flash.success%>',
                 type: 'success',
                 layout: 'topRight',
                 timeout: 1500
             }).show();
         <% } %>
 
-        <% if(flash.error && flash.error.length > 0) { %> 
+        <% if(locals.flash.error && locals.flash.error.length > 0) { %> 
             new Noty({
                 theme: 'relax',
-                text: '<%= flash.error%>',
+                text: '<%= locals.flash.error%>',
                 type: 'error',
                 layout: 'topRight',
                 timeout: 1500

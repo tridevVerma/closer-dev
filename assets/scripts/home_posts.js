@@ -12,11 +12,21 @@
                 url:"/users/posts/create",
                 data: $(newPostForm).serialize(),
                 success: function(data){
+                    
+                    // Create and append new-post UI to posts-list
                     let newPost = newPostDom(data.data.post, data.data.username);
                     $('.show-posts>ul').prepend(newPost);
+
+                    // Call listener to activate delete-post functionality
                     deletePost($(' .delete-post-btn', newPost));
+
+                    // Initiate new-comment-container attached to newly created post
                     new PostComments(data.data.post._id);
+
+                    // Empty post-form
                     $(newPostForm)[0].reset();
+
+                    // Call listener to activate like-post functionality
                     likePost($(newPost).find('.like-post-btn'));
                     notifyMsg("Post published!!", "success");
                 },
@@ -28,7 +38,7 @@
         
     };
 
-    // method to create post in DOM
+    // method to create Post-UI in DOM
 
     let newPostDom = function(post, username){
         return $(`<li id="post-${post._id}">
@@ -73,6 +83,8 @@
                 type: "get",
                 url: $(deleteLink).prop('href'),
                 success: function(data){
+
+                    // Remove post from DOM
                     $(`#post-${data.data.post_id}`).remove();
                     notifyMsg("Post and associated comments deleted!!", "success");
                 },
@@ -91,7 +103,10 @@
                 type: "get",
                 url: $(likeLink).prop('href'),
                 success: function(data){
+                    // Get and provide Total likes count on a post
                     $(likeLink).children('.post-likes-count').text(data.count);
+
+                    // Check if post is liked or disliked then create toast message
                     notifyMsg(data.likeAdded ? "You just liked the post" : "You just disliked the post", "success");
                 },
                 error: function(err){
@@ -115,13 +130,18 @@
 
     let addAjax = function(){
         $('.show-posts>ul>li').each(function(index, post){
+
+            // Add listener for deleting and liking the post
             deletePost($(post).find('.delete-post-btn'));
             likePost($(post).find('.like-post-btn'));
+
+            // create new-comment-container attached to each post
             let postId = $(post).prop('id').split('-')[1];
             new PostComments(postId);
         })
     }
 
+    // Call listener to activate creating, deleting, liking on the post
     createPost();
     addAjax();
     

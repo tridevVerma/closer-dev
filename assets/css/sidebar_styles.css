@@ -1,0 +1,29 @@
+#users-freinds {
+  flex-grow: 1;
+  background: var(--header-dark);
+  padding-left: 2rem;
+  padding-right: 2rem; }
+  #users-freinds > hr {
+    margin-top: 2rem; }
+  #users-freinds > h1 {
+    color: var(--white); }
+  #users-freinds > .smiley {
+    font-size: 6rem; }
+  #users-freinds > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    #users-freinds > ul > li {
+      width: 100%;
+      text-align: center;
+      background-color: var(--main);
+      margin: 1rem auto;
+      padding: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center; }
+      #users-freinds > ul > li > a {
+        font-size: 1.5rem;
+        color: var(--white); }
+        #users-freinds > ul > li > a > img {
+          width: 35px; }

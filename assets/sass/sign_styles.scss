@@ -1,16 +1,16 @@
 main{
     width: 100%;
-    height: 91vh;
-    background: rgb(250, 56, 88);
+    height: 80vh;
+    max-height: 90vh;
+    background: var(--main);
     display: flex;
     justify-content: center;
     align-items: center;
 
     .container{
-        width: 60%;
-        height: 60vh;
-        background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        width: 100%;
+        height: 100%;
+        background: var(--card-bg-gradient);
         display: flex;
 
         & > .local-google-container{
@@ -24,7 +24,6 @@ main{
             padding-right: 2rem;
 
             & > form{
-                
                 width: 100%;
                 display: flex;
                 flex-direction: column;
@@ -44,8 +43,8 @@ main{
                 & > #submit-btn{
                     cursor: pointer;
                     &:hover{
-                        background-color: rgb(250, 56, 88);
-                        color:#fff;
+                        background-color: var(--main);
+                        color:var(--white);
                     }
                 }  
             }
@@ -54,7 +53,7 @@ main{
                 width: 100%;
                 height: 2px;
                 border: none;
-                background-color: rgb(250, 56, 88);
+                background-color: var(--main);
             }
 
             & > a{
@@ -63,18 +62,18 @@ main{
                 font-size: 1.2rem;
                 padding: 8px 16px;
                 border-radius: 30px;
-                background-color: #fff;
+                background-color: var(--light);
                 text-align: center;
-                color: #000;
+                color: var(--header-dark);
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border: 1px solid #11263C;
+                border: 1px solid var(--header-dark);
 
                 &:hover{
-                    background-color: #11263C;
-                    color: #fff;
-                    border: 1px solid #fff;
+                    background-color: var(--card-bg-gradient);
+                    color: var(--white);
+                    border: 1px solid var(--white);
                 }
 
                 & > img{

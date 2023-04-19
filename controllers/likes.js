@@ -4,13 +4,17 @@ const Comment = require('../models/Comment');
 
 module.exports.like = async(req, res) => {
     try {
+        // type --> parent type of like [Post, Comment], id --> parent[Post, Comment] ID
         const {type, id} = req.query;
-        let parentType, likeAdded = false;
+
+        let parentType;
 
         if(type === 'Post'){
+            // If parent is Post --> find that Post and populate all likes on it
             parentType = await Post.findById(id).populate('likes');
         }
         else{
+            // If parent is Comment --> find that Comment and populate all likes on it
             parentType = await Comment.findById(id).populate('likes');
         }
         
@@ -20,17 +24,19 @@ module.exports.like = async(req, res) => {
             user: req.user._id
         });
         
-        
+        // Check if like added or removed
+        likeAdded = false;
+
         if(existingLike){
-            // check if current logged used liked post/comment
-            // let hasLiked = req.user.id === existingLike.user ? true : false;
-            
-            // like already exist --> delete it
+            // like already exist --> delete it from parent likes array and from Like collection
             await parentType.likes.pull(existingLike._id);
             await parentType.save();
             await Like.deleteOne({_id: existingLike.id});
+
+            // like removed
             likeAdded = false;
         }else{
+            // like doesn't exist --> create like entry in Like collection and push it to parent likes array
             let newLike = await Like.create({
                 user: req.user._id,
                 parent: id,
@@ -38,6 +44,8 @@ module.exports.like = async(req, res) => {
             });
             await parentType.likes.push(newLike._id);
             await parentType.save();
+
+            // like added
             likeAdded = true;
         }
 

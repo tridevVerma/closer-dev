@@ -3,12 +3,16 @@ const Comment = require('../models/Comment');
 const Like = require('../models/Like');
 
 // Add User's Post
-
 module.exports.createPost = async (req, res) => {
     
-    const newPost = {title: req.body["post-title"], content: req.body["post-content"], user: req.user._id};
+    const newPost = {
+        title: req.body["post-title"], 
+        content: req.body["post-content"], 
+        user: req.user._id
+    };
     
     try {
+        // Create post
         let post = await Post.create(newPost); 
         if(req.xhr){
             return res.status(201).json({
@@ -29,16 +33,21 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.destroyPost = async (req, res) => {
     
-    // async await 
-    
     try {
-        const post = await Post.findByIdAndDelete(req.params.id);
+        const post = await Post.findById(req.params.id);
 
         // .id means converting _id to string format
         if(post.user == req.user.id){
+            // If post found and signed user is same as user who created that post --> delete it
+            await Post.deleteOne({_id: post._id});
+
+            // Delete all likes on that post
             await Like.deleteMany({parent: req.params.id, onModel: 'Post'});
-            await Like.deleteMany({_id: {$in: post.comments}});
             
+            // Delete all likes on the comments which are commented on that post
+            await Like.deleteMany({parent: {$in: post.comments}, onModel: 'Comment'});
+            
+            // Delete all comments of tha post
             await Comment.deleteMany({post: req.params.id});
             
             if(req.xhr){
@@ -60,22 +69,4 @@ module.exports.destroyPost = async (req, res) => {
     } catch (err) {
         req.flash('error', err);
     }
-
-    // callback hell
-
-    // const post = await Post.findById(req.params.id, (err, post) => {
-    //     if(err) { console.log("Can't find post to destroy"); return; }
-
-    //     // .id means converting _id to string format
-    //     if(post.user == req.user.id){
-    //         post.remove();
-    //         Comment.deleteMany({post: req.params.id}, (err, msg) => {
-    //             if(err){console.log("Can't delete comments when destroying posts"); return; }
-    //             return res.redirect('back');
-    //         })
-    //     }
-    //     else{
-    //         return res.redirect('back');
-    //     }
-    // })
 }

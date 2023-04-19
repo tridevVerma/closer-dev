@@ -1,19 +1,19 @@
-const express = require('express');
-var cookieParser = require('cookie-parser');
-const db = require('./config/mongoose');
-const session = require('express-session');
-const passport = require('passport');
+const express = require('express'); // express for handling backend
+var cookieParser = require('cookie-parser');  // Parse Cookie header and populate req.cookies with an key / secret
+const db = require('./config/mongoose');    // mongoose configuration
+const session = require('express-session'); // to store signed user data and then authenticate using this data
+const passport = require('passport');   // to use different authentication strategies
 const passportLocal = require('./config/passport-local-strategy'); // passport -> local strategy
 const passportJwt = require('./config/passport-jwt-strategy');  // passport -> jwt strategy
 const passportGoogle = require('./config/passport-google-oauth2-strategy'); // passport -> google strategy
-const MongoStore = require('connect-mongo');
-var expressLayouts = require('express-ejs-layouts');
-const flash = require('connect-flash');
-const {customFlash} = require('./config/customFlashMiddleware.js');
-const env = require('./config/environment.js');
-const logger = require('morgan')
-const path = require('path');
-const app = express();
+const MongoStore = require('connect-mongo');  // to store signed user data (session) in mongodb
+var expressLayouts = require('express-ejs-layouts');  // use layouts with ejs
+const flash = require('connect-flash');  // to show toast messages
+const {customFlash} = require('./config/customFlashMiddleware.js');  // toast messages configuration
+const env = require('./config/environment.js');  // configuration of development / production environment
+const logger = require('morgan');  // to store logs in seperate file
+const path = require('path'); // path handling module
+const app = express();  // initiate express-app
 const port = env.server_port;
 
 // chat-box setup
@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(env.asset_path));
 app.use(env.upload_path, express.static(path.join(__dirname, env.upload_path)));   // make the upload path available to the browser
 
+// set up morgan to store logs
 app.use(logger(env.morgan.mode, env.morgan.options));
 
 // set up express-ejs-layouts
@@ -54,14 +55,18 @@ app.use(session({
     store: MongoStore.create({mongoUrl: `mongodb://${env.mongodb_domain_name}:${env.mongodb_port}/${env.db_name}`}),
 }));
 
+// Initialize passport and provide session to authenticate and save signed user data
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Set signed user info from session cookie to req.locals to be accessible by views
 app.use(passport.setAuthenticatedUser);
 
 // configure flash messages (already configured cookie-parser and express-session above)
 app.use(flash());
-app.use(customFlash)
+// setup custom flash to store req.flash() toast msg by server to res.locals.flash which can be accessed by views(ejs) 
+app.use(customFlash);
+
 // set up routes
 app.use('/', require('./routes/index'));
 

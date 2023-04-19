@@ -14,18 +14,25 @@ module.exports.createComment = async (req, res) => {
     }
     
     try {
+        // Find post on which comment was made
         const post = await Post.findById(commentData.post);
 
         if(post){
+            
+            // If post exist --> create new comment and push it in db's comments array
             let comment = await Comment.create(newComment);
             post.comments.push(comment);
+
+            // Save changes
             post.save();
-            comment = await comment.populate({
-                path: 'user',
-                select: {'_id': 1, 'name': 1, 'email': 1}
-            });
+
+            // Populate each comment with user-name and user-email
+            await comment.populate('user', 'name email');
             
+            /** --> Directly use nodeMailer to send Mail <-- **/
             // commentMailer.newComment(comment);
+
+            /** --> Use Kue with Redis [to store jobs(mail)] to be sent via nodeMailer <-- **/
             // let job = queue.create('emails', comment).save(err => {
             //     if(err){
             //         console.log('Error in creating queue', err);
@@ -35,7 +42,7 @@ module.exports.createComment = async (req, res) => {
             // })
 
             if(req.xhr){
-                // console.log("new comment", comment)
+                // If it's an ajax request
                 return res.status(201).json({
                     data: {
                         comment,
@@ -44,6 +51,7 @@ module.exports.createComment = async (req, res) => {
                     message: "Comment Added"
                 })
             }
+            
             req.flash('success', "Comment created!!");
             res.redirect('/');
         }
@@ -58,12 +66,23 @@ module.exports.createComment = async (req, res) => {
 
 module.exports.destroyComment = async (req, res) => {
     try {
-        const comment = await Comment.findByIdAndDelete(req.params.id);
+        // Find comment with params
+        const comment = await Comment.findById(req.params.id);
+
+        // If comment found and signed user is same as user who created that comment --> delete it
         if(comment && comment.user == req.user.id){
             let postId = comment.post;
 
-            await Post.findByIdAndUpdate(postId, { $pull : {comments : req.params.id}});
+            await Comment.deleteOne({_id: comment._id});
 
+            // Delete comment from post's array of comments
+            const post = await Post.findById(postId);
+            await post.comments.pull(comment._id)
+            
+            // Save changes
+            await post.save();
+
+            // Delete all likes on that particular comment
             await Like.deleteMany({parent: req.params.id, onModel: 'Comment'});
             
             if(req.xhr){

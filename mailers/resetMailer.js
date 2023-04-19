@@ -2,9 +2,11 @@ const env = require('../config/environment');
 const nodeMailer = require('../config/nodemailer');
 
 exports.resetPWD = function(user, link){
-
+    
+    // Generate HTML from views(ejs) and data
     let htmlString = nodeMailer.renderTemplate({user, link}, '/reset_pwd.ejs');
 
+    // Send Mail
     nodeMailer.transporter.sendMail({
         from: env.server_email,
         to: user.email,

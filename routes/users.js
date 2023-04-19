@@ -37,6 +37,7 @@ router.get('/chat-now/:id', passport.checkAuthentication, freindController.chatt
 router.get('/reset-pwd', usersController.view_Reset);
 router.post('/reset-pwd', usersController.createToken);
 router.post('/reset-pwd/:id/:token', usersController.resetPwd);
+
 // use passport as a middleware to authenticate
 router.post('/create-session', passport.authenticate(
     'local',

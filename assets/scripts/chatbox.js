@@ -1,5 +1,6 @@
 {
     $('.chat-now').click(function (e) {
+        // *********** INITIATE CHAT BY CLICKING CHAT BUTTON **********
         e.preventDefault();
         const self = $(this);
 
@@ -7,11 +8,19 @@
             type: 'get',
             url: self.prop('href'),
             success: function (data) {
-                console.log(data);
+
+                // *********** GENERATING NEW CHAT ENGINE **********
+                // Initiate chat socket on client side
                 const chat = new chatEngine('chat-engine', data.email);
+                
+                // Create and append UI to DOM
                 const newChat = newChatBox(data.name);
                 $('.chat-engine').empty().prepend(newChat);
+                
+                // Enable show-hide feature of chat-box
                 showHide();
+
+                // Handling sending, receiving and closing of connection with socket
                 chat.connectionHandler()
             },
             error: function (err) {
@@ -20,6 +29,7 @@
         })
     });
 
+    // *********** CHAT-BOX UI **********
     function newChatBox(name) {
         return `<div class="chat-heading">
         <h4>${name}</h4>
@@ -54,6 +64,7 @@
     </div>`
     }
 
+    // *********** SHOW/HIDE CHAT-BOX **********
     function showHide(){
         const showHideBtn = $('.display');
         const chatContainer = $('.chat-container');

@@ -1,0 +1,70 @@
+.comments-section {
+  border-top: 2px solid var(--main);
+  padding-top: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column; }
+  .comments-section .new-comment-form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    justify-content: center;
+    margin: 1rem auto; }
+    .comments-section .new-comment-form > input[type="text"] {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      outline: none;
+      border: none;
+      width: 100%;
+      padding: 6px 16px;
+      font-size: 0.9rem; }
+    .comments-section .new-comment-form > input[type="submit"] {
+      background-color: var(--main);
+      color: var(--light);
+      border: none;
+      padding: 10px;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      font-size: 0.9rem; }
+      .comments-section .new-comment-form > input[type="submit"]:hover {
+        cursor: pointer;
+        background-color: var(--main-hover); }
+  .comments-section > a {
+    color: var(--light);
+    margin-top: 1rem;
+    margin-bottom: 1rem; }
+    .comments-section > a:hover {
+      color: var(--main); }
+  .comments-section .show-comments {
+    flex-grow: 1; }
+    .comments-section .show-comments > ul {
+      max-height: 90px;
+      overflow-y: auto; }
+      .comments-section .show-comments > ul::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+        border-radius: 10px; }
+      .comments-section .show-comments > ul::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent; }
+      .comments-section .show-comments > ul::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: var(--main); }
+      .comments-section .show-comments > ul > li {
+        margin: 0.8rem auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .comments-section .show-comments > ul > li > p {
+          color: var(--light);
+          flex-grow: 1; }
+          .comments-section .show-comments > ul > li > p > strong {
+            color: var(--main); }
+        .comments-section .show-comments > ul > li > a {
+          color: var(--light);
+          margin-right: 1rem;
+          font-size: 1rem; }
+          .comments-section .show-comments > ul > li > a:hover {
+            color: var(--main); }

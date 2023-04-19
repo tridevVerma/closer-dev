@@ -4,6 +4,7 @@ const Comment = require('../../../models/Comment');
 module.exports.getPosts = async (req, res) => {
 
     try {
+        // Get all posts -> sort(desc) -> populate user (name, email) -> populate comments (nested populate user (name, email))
         let posts = await Post.find({})
         .sort('-createdAt')
         .populate('user', 'name email')
@@ -27,10 +28,16 @@ module.exports.getPosts = async (req, res) => {
 
 module.exports.destroyPosts = async (req, res) => {
     try {
-        const post = await Post.findByIdAndDelete(req.params.id);
+        // Find if post exist
+        const post = await Post.findById(req.params.id);
 
-        // .id means converting _id to string format
+        // If post found and signed user is same as user who created that post --> delete it
         if(post.user == req.user.id){
+
+            // Delete post
+            await deleteOne({_id: post._id});
+
+            // Delete all comments attached to that post
             await Comment.deleteMany({post: req.params.id});
 
             return res.status(200).json({

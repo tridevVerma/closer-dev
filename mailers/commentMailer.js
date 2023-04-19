@@ -3,7 +3,10 @@ const nodeMailer = require('../config/nodemailer');
 
 exports.newComment = function (comment){
 
-    let htmlString = nodeMailer.renderTemplate({comment: comment}, '/new_comment.ejs')
+    // Generate HTML from views(ejs) and data
+    let htmlString = nodeMailer.renderTemplate({comment: comment}, '/new_comment.ejs');
+
+    // Send Mail
     nodeMailer.transporter.sendMail({
         from: env.server_email,
         to: comment.user.email,
@@ -14,7 +17,7 @@ exports.newComment = function (comment){
             console.log("Error in sending mail", err);
             return;
         }
-        console.log("Mail deleivered", info);
+        // console.log("Mail deleivered", info);
         return;
     })
 }

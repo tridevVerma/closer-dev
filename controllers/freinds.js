@@ -3,29 +3,41 @@ const Freind = require('../models/Freind');
 
 module.exports.add = async(req, res) => {
 
+    // fromUser => who sends freind request
+    // toUser => whom freind request was sent
     let fromUserId = req.user.id, toUserId = req.params.id;
 
     if(fromUserId == toUserId){
         return res.status(400).json({message: "me and freind can't be same"})
     }
     else{
-        await Freind.create({
-            userId: fromUserId,
-            freindId: toUserId
-        });
+        try {
+            // Create entry for both the users in freind collection
+            await Freind.create({
+                userId: fromUserId,
+                freindId: toUserId
+            });
 
-        const fromUser = await User.findById(fromUserId);
-        fromUser.freinds.push(toUserId);
-        fromUser.save();
-        const toUser = await User.findById(toUserId);
-        toUser.freinds.push(fromUserId);
-        toUser.save();
+            // To each user push new freind in their respective freinds array --> save changes
+            const fromUser = await User.findById(fromUserId);
+            fromUser.freinds.push(toUserId);
+            fromUser.save();
+            const toUser = await User.findById(toUserId);
+            toUser.freinds.push(fromUserId);
+            toUser.save();
 
-        return res.status(200).json({
-            message: "freind successfully added",
-            newFreind: toUser.name,
-            id: toUser.id
-        });
+            return res.status(200).json({
+                message: "freind successfully added",
+                newFreind: toUser.name,
+                id: toUser.id
+            });
+        } catch (err) {
+            console.log("Error in adding freind:", err);
+            return res.status(400).json({
+                message: "Error in adding freind"
+            })
+        }
+        
     }
     
 }
@@ -37,23 +49,33 @@ module.exports.remove = async (req, res) => {
         return res.status(400).json({message: "me and freind can't be same"})
     }
     else{
-        await Freind.deleteOne({
-            userId: fromUserId,
-            freindId: toUserId
-        });
-
-        const fromUser = await User.findById(fromUserId);
-        fromUser.freinds.pull(toUserId);
-        fromUser.save();
-        const toUser = await User.findById(toUserId);
-        toUser.freinds.pull(fromUserId);
-        toUser.save();
-
-        return res.status(200).json({
-            message: "freind successfully removed",
-            freind: toUser.name,
-            id: toUser.id
-        });
+        try {
+            // Find and delete freindship relation via userId and freindId
+            await Freind.deleteOne({
+                userId: fromUserId,
+                freindId: toUserId
+            });
+    
+            // From each user pull freind from their respective freinds array --> save changes
+            const fromUser = await User.findById(fromUserId);
+            fromUser.freinds.pull(toUserId);
+            fromUser.save();
+            const toUser = await User.findById(toUserId);
+            toUser.freinds.pull(fromUserId);
+            toUser.save();
+    
+            return res.status(200).json({
+                message: "freind successfully removed",
+                freind: toUser.name,
+                id: toUser.id
+            });
+        } catch (err) {
+            console.log("Error in removing freind:", err);
+            return res.status(400).json({
+                message: "Error in removing freind"
+            })
+        }
+        
     }
     
 }

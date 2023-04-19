@@ -1,3 +1,4 @@
+// *********** SERVER SIDE CONFIGURATION OF SOCKET.IO **********
 module.exports.chatSockets = (chatServer) => {
     let io = require('socket.io')(chatServer);
     io.on('connection', function(socket){

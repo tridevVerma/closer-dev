@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgb(250, 56, 88);
+    background: var(--main);
 
     & > h1{
         font-size: 4rem;
@@ -34,14 +34,14 @@
         padding: 12px 25px;
         font-size: 1.5rem;
         border: none;
-        background-color: rgb(250, 56, 88);
-        border: 2px double #fff;
-        color: #fff;
+        background-color: var(--main);
+        border: 2px double var(--white);
+        color: var(--white);
         width: 25%;
         text-align: center;
 
         &:hover{
-            background-color: rgb(255, 50, 120);
+            background-color: var(--main-hover);
         }
     }
 
@@ -60,7 +60,7 @@
     & > form{
         width: 60%;
         height: 60%;
-        background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+        background: var(--card-bg-gradient);
         border-radius: 16px;
         display: flex;
         flex-direction: column;
@@ -69,7 +69,7 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
         input{
-            border: 2px solid #000;
+            border: 2px solid var(--header-dark);
             width: 80%;
             font-size: 1.2rem;
             padding: 8px 16px;
@@ -80,9 +80,9 @@
             cursor: pointer;
 
             &:hover{
-                background-color: rgb(250, 56, 88);
-                color:#fff;
-                border: 2px solid rgb(250, 56, 88);
+                background-color: var(--main-hover);
+                color:var(--white);
+                border: 2px solid var(--main-hover);
             }
         }  
     }

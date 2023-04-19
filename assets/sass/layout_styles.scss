@@ -1,8 +1,25 @@
+:root{
+
+    // ********** COLOR-PALLETTE **********
+    --background-dark: #352f44;
+    --header-dark: #0f1021;
+    --light: #ddd;
+    --white: #eee;
+    --main: #ff487e;
+    --main-hover: #f40968;
+    --card-bg-gradient: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+}
+
 *{
+    // *********** GENERAL-SETTINGS **********
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
     font-family: sans-serif;
+
+    input[type="text"], input[type="email"], input[type="password"], input[type="submit"], textarea{
+        background-color: var(--light);
+    }
 
     ul{
         list-style-type: none;
@@ -22,6 +39,6 @@ body{
 main{
     flex-grow: 1;
     display: flex;
-    background-color: #352f44;
-    color: #fff;
+    background-color: var(--background-dark);
+    color: var(--light);
 }
