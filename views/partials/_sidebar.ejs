@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="/css/sidebar_styles.css">
+<link rel="stylesheet" href="<%=locals.assetPath('sidebar_styles.css', 'css')%>" />
+
 
 <section id="users-freinds">
     <% if(locals.user) { %>
@@ -10,7 +11,7 @@
                         <p><%= f.name%></p>
                     </a>
                     <a href="/users/chat-now/<%=f.id%>" class="chat-now">
-                        <img src="/images/chatting.png" alt="chat-now-icon">
+                        <img src="<%=locals.assetPath('chatting.png', 'images')%>" alt="chat-now-icon">
                     </a>
                 </li>
             <% } %>

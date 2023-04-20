@@ -14,6 +14,7 @@ const env = require('./config/environment.js');  // configuration of development
 const logger = require('morgan');  // to store logs in seperate file
 const path = require('path'); // path handling module
 const app = express();  // initiate express-app
+require('./config/viewHelper')(app);  // provide app to be used by viewHelper to provide local fn to all views
 const port = env.server_port;
 
 // chat-box setup

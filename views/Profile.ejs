@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/users_profile_styles.css">
+<link rel="stylesheet" href="<%=locals.assetPath('users_profile_styles.css', 'css')%>" />
 
 <section id="users-profile">
     <% if(locals.user && locals.user.id == profile_user.id) { %>
@@ -38,5 +38,5 @@
     <% } %>
 </section>
 
-<script src="/scripts/freinds.js"></script>
+<script src="<%=locals.assetPath('freinds.js', 'scripts')%>"></script>
     

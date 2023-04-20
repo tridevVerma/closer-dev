@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/sign_styles.css" />
+<link rel="stylesheet" href="<%=locals.assetPath('sign_styles.css', 'css')%>" />
 
 <div class="container">
   <div class="local-google-container">
@@ -34,12 +34,12 @@
       <input type="submit" id="submit-btn" value="Signup" />
     </form>
     <hr/>
-    <a href="/users/auth/google"><img src="/images/google-logo.png" alt=""> Sign In / Sign Up</a>
+    <a href="/users/auth/google"><img src="<%=locals.assetPath('google-logo.png','images')%>" alt=""> Sign In / Sign Up</a>
   </div>
 
   <div class="images">
     <figure>
-      <img src="/images/signup.jpg" alt="signup-img" />
+      <img src="<%=locals.assetPath('signup.jpg', 'images')%>" alt="signup-img" />
     </figure>
   </div>
 </div>

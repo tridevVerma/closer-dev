@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="/css/comments_styles.css">
+<link rel="stylesheet" href="<%=locals.assetPath('comments_styles.css', 'css')%>" />
+
 <div class="comments-section">
     <% if (locals.user) { %>
         <form id="post-<%=post._id%>-comment-form" method="POST" action="/users/comments/create" class="new-comment-form">
