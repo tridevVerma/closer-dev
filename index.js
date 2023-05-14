@@ -1,4 +1,5 @@
 const express = require('express'); // express for handling backend
+const cors = require('cors');
 var cookieParser = require('cookie-parser');  // Parse Cookie header and populate req.cookies with an key / secret
 const db = require('./config/mongoose');    // mongoose configuration
 const session = require('express-session'); // to store signed user data and then authenticate using this data
@@ -16,7 +17,7 @@ const path = require('path'); // path handling module
 const app = express();  // initiate express-app
 require('./config/viewHelper')(app);  // provide app to be used by viewHelper to provide local fn to all views
 const port = env.server_port;
-
+app.use(cors());
 // chat-box setup
 const chatServer = require('http').Server(app);
 const {chatSockets} = require('./config/socket.js');
