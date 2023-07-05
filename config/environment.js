@@ -27,15 +27,15 @@ const development = {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: "tv072000", // generated ethereal user
-            pass: "wgmxrstfomplqemt", // generated ethereal password
+            user: "", // generated ethereal user
+            pass: "", // generated ethereal password
         },
     },
-    google_client_ID:     "598425896524-6c2gmoak5086q3dlvh8dp20pk8i9ek0b.apps.googleusercontent.com",
-    google_client_secret: "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",
+    google_client_ID:     "",
+    google_client_secret: "",
     google_callback_URL: "http://localhost:8000/users/auth/google/callback",
     jwt_key: 'closer',
-    server_email: 'tv072000@gmail.com',
+    server_email: '',
     server_port: 8000,
     mongodb_port: 27017,
     socket_port: 5000,
